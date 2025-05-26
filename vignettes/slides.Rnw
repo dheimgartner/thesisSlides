@@ -14,7 +14,7 @@ library("MASS")
 @
 
 \title{Measuring and Modeling the Impact of Telework on Transport Demand -- Data, Tools and Analysis}
-\author{Doctoral Examination Daniel Heimgartner}
+\author{Daniel Heimgartner}
 \institute{IVT, ISTP, ETH Zürich}
 \date{2025-06-05}
 
@@ -22,8 +22,26 @@ library("MASS")
 
 % \ivtpleasecite
 
-\ivttitlepage
+% \ivttitlepage
+{%
+\nopagenumber
+\begin{frame}
+\vspace{6em}
+\Large
+\textbf{Measuring and Modeling the Impact of Telework on Transport Demand -- Data, Tools and Analysis}\\
+\normalsize
+\vspace{2em}
+Daniel Heimgartner\\
+\vspace{1em}
+IVT, ISTP\\
+ETH Zurich\\
+\vspace{1em}
+PhD Thesis Defense\\
+Zurich, June 5th, 2025
+\end{frame}
+}%
 
+\section{Foo}
 \sectionslide{\icon{\faHashtag} Foo}
 
 \begin{frame}
@@ -31,7 +49,10 @@ library("MASS")
   Bar
 \end{frame}
 
-\section{Code}
+\sectionslide{\icon{\faHashtag} Thank you!}
+
+\sectionslide{\icon{\faHashtag} Appendix}
+
 \begin{frame}[fragile]
   \frametitle{\R~code}
   (use ``fragile'' option for slide containing verbatim code...)
@@ -44,7 +65,5 @@ print("hello world")
   \frametitle{Talking code}
   The usual JSS commands can be used. E.g., this is \code{code}, this a \fct{function}, this a \pkg{package}, etc.
 \end{frame}
-
-\sectionslide{Thank you!}
 
 \end{document}
