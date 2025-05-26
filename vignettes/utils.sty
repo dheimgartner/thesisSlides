@@ -1,0 +1,153 @@
+% Package `RJournal' to use with LaTeX2e
+% Copyright (C) 2010 by the R Foundation
+% Copyright (C) 2013 by the R Journal
+%
+% Originally written by Kurt Hornik and Friedrich Leisch with subsequent
+% edits by the editorial board
+%
+% CAUTION:
+% Do not modify this style file. Any changes to this file will be reset when your
+% article is submitted.
+% If you must modify the style or add LaTeX packages to the article, these
+% should be specified in RJwrapper.tex
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{utils}[2025/05/26 v0.1 daniehei]
+
+\RequirePackage{tikz}
+
+% Overall page layout, fonts etc -----------------------------------------------
+
+% \RequirePackage[pagebackref]{hyperref}
+% \renewcommand{\backref}[1]{[p#1]}
+
+% Dark blue colour for all links
+\RequirePackage{color}
+\definecolor{link}{rgb}{0.45,0.51,0.67}
+\hypersetup{
+  colorlinks,%
+  citecolor=link,%
+  filecolor=link,%
+  linkcolor=link,%
+  urlcolor=link
+}
+
+% Text formatting --------------------------------------------------------------
+
+\newcommand{\R}{R}
+\newcommand{\address}[1]{\addvspace{\baselineskip}\noindent\emph{#1}}
+\newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
+
+% Simple font selection is not good enough.  For example, |\texttt{--}|
+% gives `\texttt{--}', i.e., an endash in typewriter font.  Hence, we
+% need to turn off ligatures, which currently only happens for commands
+% |\code| and |\samp| and the ones derived from them.  Hyphenation is
+% another issue; it should really be turned off inside |\samp|.  And
+% most importantly, \LaTeX{} special characters are a nightmare.  E.g.,
+% one needs |\~{}| to produce a tilde in a file name marked by |\file|.
+% Perhaps a few years ago, most users would have agreed that this may be
+% unfortunate but should not be changed to ensure consistency.  But with
+% the advent of the WWW and the need for getting `|~|' and `|#|' into
+% URLs, commands which only treat the escape and grouping characters
+% specially have gained acceptance
+
+\DeclareRobustCommand\code{\bgroup\@noligs\@codex}
+\def\@codex#1{\texorpdfstring%
+{{\normalfont\ttfamily\hyphenchar\font=-1 #1}}%
+{#1}\egroup}
+\newcommand{\kbd}[1]{{\normalfont\texttt{#1}}}
+\newcommand{\key}[1]{{\normalfont\texttt{\uppercase{#1}}}}
+\DeclareRobustCommand\samp{`\bgroup\@noligs\@sampx}
+\def\@sampx#1{{\normalfont\texttt{#1}}\egroup'}
+\newcommand{\var}[1]{{\normalfont\textsl{#1}}}
+\let\env=\code
+\newcommand{\file}[1]{{`\normalfont\textsf{#1}'}}
+\let\command=\code
+\let\option=\samp
+\newcommand{\dfn}[1]{{\normalfont\textsl{#1}}}
+% \acronym is effectively disabled since not used consistently
+\newcommand{\acronym}[1]{#1}
+\newcommand{\strong}[1]{\texorpdfstring%
+{{\normalfont\fontseries{b}\selectfont #1}}%
+{#1}}
+\let\pkg=\strong
+\newcommand{\CRANpkg}[1]{\href{https://CRAN.R-project.org/package=#1}{\pkg{#1}}}%
+\let\cpkg=\CRANpkg
+\newcommand{\ctv}[1]{\href{https://CRAN.R-project.org/view=#1}{\emph{#1}}}
+\newcommand{\BIOpkg}[1]{\href{https://www.bioconductor.org/packages/release/bioc/html/#1.html}{\pkg{#1}}}
+
+% Example environments ---------------------------------------------------------
+\RequirePackage{fancyvrb}
+\RequirePackage{alltt}
+
+\DefineVerbatimEnvironment{example}{Verbatim}{}
+\renewenvironment{example*}{\begin{alltt}}{\end{alltt}}
+
+% Support for output from Sweave, and generic session style code
+% These used to have fontshape=sl for Sinput/Scode/Sin, but pslatex
+% won't use a condensed font in that case.
+
+% Update (2015-05-28 by DS): remove fontsize=\small to match example environment
+
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{}
+\DefineVerbatimEnvironment{Sin}{Verbatim}{}
+\DefineVerbatimEnvironment{Sout}{Verbatim}{}
+\newenvironment{Schunk}{}{}
+
+% Mathematics ------------------------------------------------------------------
+
+% The implementation of |\operatorname| is similar to the mechanism
+% \LaTeXe{} uses for functions like sin and cos, and simpler than the
+% one of \AmSLaTeX{}.  We use |\providecommand| for the definition in
+% order to keep the one of the \pkg{amstex} if this package has
+% already been loaded.
+%    \begin{macrocode}
+\providecommand{\operatorname}[1]{%
+  \mathop{\operator@font#1}\nolimits}
+\RequirePackage{amsfonts}
+
+\renewcommand{\P}{%
+  \mathop{\operator@font I\hspace{-1.5pt}P\hspace{.13pt}}}
+\newcommand{\E}{%
+  \mathop{\operator@font I\hspace{-1.5pt}E\hspace{.13pt}}}
+\newcommand{\VAR}{\operatorname{var}}
+\newcommand{\COV}{\operatorname{cov}}
+\newcommand{\COR}{\operatorname{cor}}
+
+% Figures ----------------------------------------------------------------------
+
+\RequirePackage[font=small,labelfont=bf]{caption}
+
+% Wide environments for figures and tables -------------------------------------
+\RequirePackage{environ}
+
+% An easy way to make a figure span the full width of the page
+\NewEnviron{widefigure}[1][]{
+\begin{figure}[#1]
+\advance\leftskip-2cm
+\begin{minipage}{\dimexpr\textwidth+4cm\relax}%
+  \captionsetup{margin=2cm}
+  \BODY
+\end{minipage}%
+\end{figure}
+}
+
+\NewEnviron{widetable}[1][]{
+\begin{table}[#1]
+\advance\leftskip-2cm
+\begin{minipage}{\dimexpr\textwidth+4cm\relax}%
+  \captionsetup{margin=2cm}
+  \BODY
+\end{minipage}%
+\end{table}
+}
+
+%% daniehei: added
+\newcommand{\proglang}[1]{\textsf{#1}}
+\newcommand{\class}[1]{`\code{#1}'}
+\newcommand{\fct}[1]{\code{#1()}}
+\newcommand{\leftmarginpar}[1]{%
+  {\reversemarginpar\marginpar{#1}}%
+}

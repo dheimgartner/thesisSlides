@@ -1,0 +1,173 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+% \usetheme{ivt}
+\usetheme{ivt-mono}
+\usepackage{utils}
+
+\usepackage{FiraSans}
+\usepackage{eulervm}
+
+\SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
+<<preliminaries, echo=FALSE, results=hide>>=
+options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
+library("MASS")
+@
+
+\title{IVT Beamer Template}
+\author{Daniel Heimgartner}
+\institute{IVT\\ETH\\Zürich}
+\date{February 2024}
+
+\begin{document}
+
+\ivtpleasecite
+
+\ivttitlepage
+\ivttitlepage[logo]
+
+\begin{frame}
+  \frametitle{Table of Contents (usually not needed...)}
+  \tableofcontents
+\end{frame}
+
+\sectionslide{\icon{\faHashtag} This is a sectionslide}
+
+\sectionslide[mDarkBrown]{You can change the color...}
+
+\section{Introduction}
+\begin{frame}
+  \frametitle{Introduction}
+  \begin{itemize}
+    \item Item 1
+    \item Item 2
+    \item Item 3
+  \end{itemize}
+\end{frame}
+
+\section{Fontawesome}
+\begin{frame}
+  \frametitle{Fontawesome \faHandPeaceO}
+  Check out the icons available under \url{https://ch.mirrors.cicku.me/ctan/fonts/fontawesome/doc/fontawesome.pdf} \\
+\end{frame}
+
+\section{Citation}
+\begin{frame}[fragile, allowframebreaks]{Citation}
+\frametitle{Citation}
+Just spell it out and then you can pack the reference into the sidebar using \texttt{\textbackslash ivtsidebar\{\}} \ivtsidebar{The ivtsidebar command.}
+
+\framebreak
+
+\begin{columns}[T,onlytextwidth]
+\column{0.25\textwidth}
+\begin{exampleblock}{ivtsidebar}
+\begin{verbatim}
+\ivtsidebar{}
+\end{verbatim}
+\end{exampleblock}
+\column{0.7\textwidth}
+\footnotesize
+\alert{This one} isn't a verbatim way to express code, but it will change the font to typewriter, so it 'looks like code'. However, in these short bits of code, you will have to use escape sequences for reserved characters.
+
+Some make massive use of \verb|\texttt{}| when 'talking' about code or, you know, writing explanatory text sequences. It is especially useful for bits of code where there is no excessive (or none at all) use of escape sequences. Then it is a really handy way to quickly typeset code. Once you have lots of reserved characters, you might be better of just using this next one.
+\end{columns}
+
+\framebreak
+
+This also demonstrates the \verb|\framebreak{}| functionality...
+
+\begin{alertblock}{allowframebreaks}
+You need to set \textit{allowframebreaks} as an option of the frame for this to work.
+\end{alertblock}
+\end{frame}
+
+\section{Blocks and Alert}
+\begin{frame}
+  \frametitle{Blocks and Alert}
+  \begin{block}{Block Title}
+    This is a regular block.
+  \end{block}
+
+  \begin{alertblock}{Alert Block Title}
+    This is an alert block.
+  \end{alertblock}
+
+  \begin{exampleblock}{Example Block Title}
+    This is an example block.
+  \end{exampleblock}
+\end{frame}
+
+\section{Columns}
+\begin{frame}
+  \frametitle{Columns}
+  \begin{columns}
+    \column{0.4\textwidth}
+    This is the first column.
+
+    \column{0.4\textwidth}
+    This is the second column.
+  \end{columns}
+\end{frame}
+
+\section{Figures and Tables}
+\begin{frame}
+  \frametitle{Figures}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{ivt-logo}
+    \caption{Probably no need for a caption.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tables}
+  \begin{table}[]
+      \centering
+      \begin{tabular}{ |c|c|c| }
+        \hline
+        cell 1 & cell 2 & cell 3 \\
+        \hline
+        cell 4 & cell 5 & cell 6 \\
+        \hline
+        cell 7 & cell 8 & cell 9 \\
+        \hline
+      \end{tabular}
+    \caption{Wow, a table}
+  \end{table}
+\end{frame}
+
+\section{Equations}
+\begin{frame}
+  \frametitle{Equations}
+  \begin{equation}
+    E = mc^2
+  \end{equation}
+\end{frame}
+
+\section{Overlays}
+\begin{frame}
+  \frametitle{Overlays}
+  \begin{itemize}
+    \item<1-> First item
+    \item<2-> Second item
+    \item<3-> Third item
+  \end{itemize}
+\end{frame}
+
+\section{Code}
+\begin{frame}[fragile]
+  \frametitle{\R~code}
+  (use ``fragile'' option for slide containing verbatim code...)
+<<>>=
+print("hello world")
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Talking code}
+  The usual JSS commands can be used. E.g., this is \code{code}, this a \fct{function}, this a \pkg{package}, etc.
+\end{frame}
+
+
+\sectionslide{This is it ~\alert{\faSmileO}~}
+
+\end{document}

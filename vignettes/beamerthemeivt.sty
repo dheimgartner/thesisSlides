@@ -1,0 +1,146 @@
+% ivt.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ivt}[2024/02/15 IVT Theme]
+
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{marginnote}
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{fontawesome}
+
+\usetikzlibrary{calc}
+
+% Taken from https://github.com/matze/mtheme/blob/master/source/beamercolorthememetropolis.dtx
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+
+% Set colors
+\setbeamercolor{normal text}{%
+  fg=mDarkTeal,
+  bg=black!2
+}
+
+\setbeamercolor{alerted text}{%
+  fg=mLightBrown
+}
+
+\setbeamercolor{example text}{%
+  fg=mLightGreen
+}
+
+\setbeamercolor{structure}{use=normal text, fg=normal text.fg}
+\setbeamercolor{item}{fg=mLightBrown}
+\setbeamercolor{caption name}{fg=mLightBrown}
+
+% Add vertical line below frame title
+\setbeamertemplate{frametitle}{
+  \insertframetitle\par%
+  \vskip-1.5ex%
+  \hbox{\color{mLightBrown}\rule{\dimexpr\textwidth\relax}{0.4pt}}%
+}
+
+\setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=normal text.bg!80!fg
+  }
+
+\setbeamercolor{block body}{
+  use={block title, normal text},
+  bg=block title.bg!50!normal text.bg
+}
+
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+
+% Left-align title, author, institute, and date
+\setbeamertemplate{title page}{
+  \vskip9em% Adjust the vertical space before the block
+  {\color{mDarkBrown}\textbf{\Large\inserttitle}}%
+  \vskip2em%
+  \insertauthor
+  \vskip1em%
+  \insertinstitute
+  \vskip1em%
+  \insertdate
+}
+
+% Remove navigation
+\setbeamertemplate{navigation symbols}{}
+
+% Add slide numbers to the bottom right
+\setbeamertemplate{footline}{
+  \hfill\insertframenumber/\inserttotalframenumber\hspace{0.1cm}\vspace{0.1cm}
+}
+
+\newcommand{\ivtlogo}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south east, inner sep=1.5em] at (current page.south east) {\includegraphics[width=5cm]{ivt-logo.png}};
+  \end{tikzpicture}%
+}
+
+\newcommand{\nopagenumber}{\setbeamertemplate{footline}{}}
+
+% Command to remove footline on title page
+\newcommand{\ivttitlepage}[1][nologo]{
+  {%
+  \nopagenumber
+  \begin{frame}
+    \titlepage
+    \ifthenelse{\equal{#1}{logo}}{\ivtlogo}{}
+  \end{frame}
+  }%
+}
+
+\newcommand{\ivtsidebar}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west, text width=\textheight, inner sep=2pt, align=left, rotate=90, font=\tiny, color=mDarkBrown!50] at (current page.south west) {#1};
+  \end{tikzpicture}%
+}
+
+\newcommand{\sectionslide}[2][mDarkTeal]{%
+{%
+\nopagenumber
+\setbeamercolor{background canvas}{bg=#1}
+\begin{frame}
+  \vfill
+  \vspace{2em}
+  {\color{white}\Large #2}
+  \vfill
+\end{frame}
+}
+}
+
+\newcommand{\ivtpleasecite}[1][%
+Author1, GivenName1, ... and GivenNameN AuthorN (Year) Title of presentation, Name of event/conference, Location, Month Year.
+]{
+{%
+  \nopagenumber
+  \begin{frame}
+    \frametitle{Preferred citation style for this presentation}
+    #1
+  \end{frame}
+}
+}
+
+\newcommand{\setbackground}[1]{%
+  \setbeamercolor{background canvas}{bg=#1}
+}
+
+\newcommand{\icon}[1]{~\alert{#1}~}
+
+\endinput

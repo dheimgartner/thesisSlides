@@ -1,0 +1,28 @@
+% ivt.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ivt-mono}[2024/03/18 IVT Mono Theme]
+
+\RequirePackage{beamerthemeivt}
+
+\setbeamercolor{structure}{use=normal text, fg=normal text.fg}
+\setbeamercolor{item}{fg=mDarkTeal}
+\setbeamercolor{caption name}{fg=mDarkTeal}
+
+\setbeamertemplate{frametitle}{
+  \insertframetitle\par%
+  \vskip-1.5ex%
+  \hbox{\color{mDarkTeal}\rule{\dimexpr\textwidth\relax}{0.4pt}}%
+}
+
+\setbeamertemplate{title page}{
+  \vskip9em% Adjust the vertical space before the block
+  {\color{mDarkTeal}\textbf{\Large\inserttitle}}%
+  \vskip1em%
+  \insertsubtitle
+  \vskip2em%
+  \insertauthor
+  \vskip1em%
+  \insertinstitute
+  \vskip1em%
+  \insertdate
+}
