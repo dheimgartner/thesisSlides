@@ -1,0 +1,20 @@
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{stuff}[2025/05/29 v0.1 daniehei]
+
+\colorlet{mGrey}{mDarkBrown!50}
+\newcommand{\greyout}[1]{\textcolor{mGrey}{#1}}
+
+\usepackage{etoolbox}
+\newenvironment{greyitemize}
+{%
+\begingroup
+\setbeamercolor{item}{fg=mGrey}
+\setbeamercolor{itemize body}{fg=mGrey}
+\setbeamercolor{itemize/enumerate body}{fg=mGrey}
+\color{mGrey}
+\begin{itemize}
+}
+{%
+\end{itemize}
+\endgroup
+}

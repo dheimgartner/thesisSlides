@@ -3,9 +3,11 @@
 % \usetheme{ivt}
 \usetheme{ivt-mono}
 \usepackage{utils}
+\usepackage{stuff}
 
 \usepackage{FiraSans}
 \usepackage{eulervm}
+
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 <<preliminaries, echo=FALSE, results=hide>>=
@@ -20,9 +22,7 @@ library("MASS")
 
 \begin{document}
 
-% \ivtpleasecite
-
-% \ivttitlepage
+%% Titlepage -------------------------------------------------------------------
 {%
 \nopagenumber
 \begin{frame}
@@ -41,15 +41,315 @@ Zurich, June 5th, 2025
 \end{frame}
 }%
 
-\section{Foo}
-\sectionslide{\icon{\faHashtag} Foo}
 
+
+
+%% Intro -----------------------------------------------------------------------
 \begin{frame}
-  \frametitle{Foo}
-  Bar
+\huge
+\vspace{1em}
+What is telework?
+% I hope, no committee member raised his hand (on that note: I was told to start by thanking...)
+% For the ones having raised their hand: You came badly prepared
+% But thanks for coming anyways -- your love must be unconditional, because you
+% clearly did not come out of interest on the topic
+% Telework = home office = working from home (or if not stated explicitly -- not from the office)
 \end{frame}
 
+
+
+
+\begin{frame}
+\huge
+\vspace{1em}
+Who thinks that telework leads to less travel?
+% Or maybe I should ask first
+\end{frame}
+
+
+
+
+\begin{frame}
+\huge
+\vspace{1em}
+Who does not speak English?
+% 1 second later: everybody! perfect! For those of you that did not understand the
+% question in the first place, Apéro ist um 17.00 Uhr -- das ist die wesentliche Info
+% der nächsten 30 Minuten!
+% first case of a selection bias: underestimating the fraction of people believing
+% that telework leads to less travel...
+% For those of you that did not understand the
+% anyways (going to next slide)
+\end{frame}
+
+
+
+
+\begin{frame}
+\huge
+\vspace{1em}
+Who thinks that telework leads to less travel?\\
+\vspace{1em}
+Wer denkt, dass Home Office zu weniger Verkehr führt?
+\end{frame}
+
+
+
+
+%% Motivation ------------------------------------------------------------------
+\section{Motivation}
+\sectionslide{\icon{\faHashtag} Motivation}
+
+% Long-standing interest in the relation between telework and transport demand
+% Changes brought about by the pandemic
+% Telework as the lasting legacy reignited the interest
+% However, evidence on the direction of effect is mixed, why?
+% Second-order effects
+% Modeling telework is difficult, modeling transport demand is difficult, modeling the two is also difficult...
+% In this presentation (and at the core of the thesis) stands this pretty simple question: RQ: more or less travel: modeling AND measuring (model to measure).
+
+% Overview slide
+% Data + Tools + Analysis (three columns)
+
+\begin{frame}
+\frametitle{Transport sector as major greenhouse gas emittor}
+\begin{itemize}
+\item Transport sector contributes 15\% of global greenhouse gas emissions (IPCC, 2022) % cite
+\item With emissions at 31\% being substantially higher in Switzerland (BAFU, 2024) % cite
+\item Reducing it through policies such as road pricing or fuel taxes is unpopular
+\item Behavioral change too...
+\end{itemize}
+\vspace{2em}
+\icon{\faCutlery} \alert{Is telework a free lunch?}
+\ivtsidebar{%
+IPCC (2022). Climate Change 2022: Mitigation of Climate Change. \textit{Technical report}, Contribution of Working Group III to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change.\\
+BAFU (2024). Kenngrössen zur Entwicklung der Treibhausgasemissionen in der Schweiz 1990–2022. \textit{Technical report}, Bundesamt für Umwelt (BAFU), Bern.
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Long-standing interest in the relation between telework and transport demand}
+\begin{itemize}
+\item First paper: Mobility changes brought about by the pandemic
+\begin{itemize}
+\item Mode shares expected to reach pre-pandemic levels
+\end{itemize}
+\item Telework shares quadrupled during the pandemic (Barrero et al., 2023) % cite
+\item Telework as the lasting legacy of the pandemic reignited the interest
+\end{itemize}
+\vspace{2em}
+\icon{\faBalanceScale} \alert{However: Evidence on the direction of the effect is mixed (Hook et al., 2020)} % cite
+\ivtsidebar{%
+Barrero JM, Bloom N, Davis SJ (2023). The Evolution of Work From Home. \textit{Journal of Economic Perspectives}, \textbf{37}(4), 23–50.\\
+Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energy and Climate Impacts of Teleworking. \textit{Environmental Research Letters}, \textbf{15}(9), 093003.
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Why? Second-order effects might offset foregone commutes}
+\begin{itemize}
+\item Time flexibilility might induce leasure travel
+\item Travel-chains might become less efficient
+\item Teleworkers might be willing to accept longer commutes (de Vos et al., 2018) % cite
+\begin{itemize}
+\item I.e., they commute less frequently but if they commute, they have to travel further
+\end{itemize}
+\end{itemize}
+\vspace{2em}
+\icon{\faLineChart} \alert{Scholarly work of the past decade leans to support evidence that telework induces more travel (Wang and Mokhtarian, 2024)} % cite
+\ivtsidebar{%
+de Vos D, Meijers E, van Ham M (2018). Working From Home and the Willingness to Accept a Longer Commute. \textit{The Annals of Regional Science}, \textbf{61}(2), 375–398.\\
+Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Main research question}
+{
+\large
+Does telework lead to more or less travel, in Switzerland?\\
+}
+\vspace{2em}
+\icon{\faArrowsAlt} \alert{Measuring and (therefore) modeling the impact of telework on transport demand}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Data, \greyout{tools and analysis}}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\textbf{Data}
+\begin{itemize}
+\small
+\item Three stage survey instrument
+\item Understand the (evolution of the) telework landscape in Switzerland
+\item Two stated preference experiments
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements)
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect)
+\end{itemize}
+\end{itemize}
+
+\column{0.3\textwidth}
+\vspace{5em}
+\greyout{\textbf{Tools}}
+\begin{greyitemize}
+\small
+\item Suitable modeling framework
+\item Implementation thereof in \R
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{10em}
+\greyout{\textbf{Analysis}}
+\begin{greyitemize}
+\small
+\item Applying the tool to suitable data
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app)
+\end{greyitemize}
+
+\end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{\greyout{Data,} tools \greyout{and analysis}}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\greyout{\textbf{Data}}
+\begin{greyitemize}
+\small
+\item Three stage survey instrument
+\item Understand the (evolution of the) telework landscape in Switzerland
+\item Two stated preference experiments
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements)
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect)
+\end{itemize}
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{5em}
+\textbf{Tools}
+\begin{itemize}
+\small
+\item Suitable modeling framework
+\item Implementation thereof in \R
+\end{itemize}
+
+\column{0.3\textwidth}
+\vspace{10em}
+\greyout{\textbf{Analysis}}
+\begin{greyitemize}
+\small
+\item Applying the tool to suitable data
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app)
+\end{greyitemize}
+
+\end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{\greyout{Data, tools and} analysis}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\greyout{\textbf{Data}}
+\begin{greyitemize}
+\small
+\item Three stage survey instrument
+\item Understand the (evolution of the) telework landscape in Switzerland
+\item Two stated preference experiments
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements)
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect)
+\end{itemize}
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{5em}
+\greyout{\textbf{Tools}}
+\begin{greyitemize}
+\small
+\item Suitable modeling framework
+\item Implementation thereof in \R
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{10em}
+\textbf{Analysis}
+\begin{itemize}
+\small
+\item Applying the tool to suitable data
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app; Winkler et al., 2024) % cite
+\end{itemize}
+
+\end{columns}
+\ivtsidebar{%
+Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time Use and Expenditure Data Based on GPS Tracks. \textit{Transportation}, pp. 1–27.
+}%
+\end{frame}
+
+
+
+%% Data ------------------------------------------------------------------------
+\section{Data}
+\sectionslide{\icon{\faHashtag} Data}
+
+% Start with background and research question
+% Quickly outline the survey
+% Telework landscape in Switzerland and changes brought about by the pandemic
+
+
+
+
+%% Tools -----------------------------------------------------------------------
+\section{Tools}
+\sectionslide{\icon{\faHashtag} Tools}
+
+% Shortcomings in the literature (modeling telework as an indicator)
+% Boxplot telework x VMD
+% Selection bias: explain intuitively (diagram and bicycle example)
+% Model and formulas
+% OPSR core (replication script of analysis)
+
+
+
+
+%% Analysis --------------------------------------------------------------------
+\section{Analysis}
+\sectionslide{\icon{\faHashtag} Analysis}
+
+% Cescriptives + treatment effects plot and table, then
+% Compare to not accounting for error correlation
+
+
+
+%% Outro -----------------------------------------------------------------------
+\section{TBD: Outro}
+\sectionslide{\icon{\faHashtag} TBC: Outro}
+% See NOTES.md (starting line 28)
+% Including limitations
+
 \sectionslide{\icon{\faHashtag} Thank you!}
+% With that, let's recall the collective wisdom of the audience, where XXX % said, that telework leads to less travel
+% What took you 5 seconds to answer, took me 3.5 years...
+% END
 
 \sectionslide{\icon{\faHashtag} Appendix}
 

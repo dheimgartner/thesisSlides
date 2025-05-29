@@ -21,6 +21,8 @@ key equations and explanation of OVB
 
 OPSR core and what it does under the hood, some implementation details (demo - run the script). why is it better than other implementations?
 
+Explain summary(fit) output
+
 analysis paper: descriptives + treatment effects plot and table, then compare to not accounting for error correlation
 
 also scratches the question how telework can be managed and whether employers can (dis-) incentivize telework. while the analysis might suffer itself from endogeneity bias it hints that nuding employees to deviate from their baseline telework preferences is very difficult. and it is quite understandable why this might be the case: vtts of foregone commute already quite substantial...
