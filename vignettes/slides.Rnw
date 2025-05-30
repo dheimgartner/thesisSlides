@@ -550,8 +550,15 @@ To obtain unbiased treatment effects, we must further evaluate the ``counterfact
 \begin{frame}
 \huge
 \vspace{1em}
-Enters: The \pkg{OPSR} \R-package
-% Without OPSR this is a considerable effort, hundreds of lines of code, and error prone
+Enters: The \pkg{OPSR} \R-package\\
+\normalsize
+Available on CRAN now.\textsuperscript{*}\\
+\vfill
+\tiny
+\textsuperscript{*}Disclaimer: The current CRAN release is outdated and has some \faBug's (among others a memory leak). The updated version has not yet been released... But is available from the \code{dev} branch here: \url{https://github.com/dheimgartner/OPSR/tree/dev}.
+% Enters: (epic voice) the opsr r packge available on CRAN now.
+% (very fast voice): disclaimer: the current...
+% Anyways: Without OPSR this is a considerable effort, hundreds of lines of code, and error prone
 % With OPSR this is a matter of hours (as I demonstrate now).
 \end{frame}
 
