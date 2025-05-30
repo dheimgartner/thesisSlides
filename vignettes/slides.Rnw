@@ -7,12 +7,14 @@
 
 \usepackage{FiraSans}
 \usepackage{eulervm}
+\usepackage[absolute,overlay]{textpos}
 
+\setbackground{white}
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 <<preliminaries, echo=FALSE, results=hide>>=
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
-library("MASS")
+library("datapap")
 @
 
 \title{Measuring and Modeling the Impact of Telework on Transport Demand -- Data, Tools and Analysis}
@@ -313,15 +315,95 @@ Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time
 \section{Data}
 \sectionslide{\icon{\faHashtag} Data}
 
-%% PROCEED HERE %%
-
 % Telework landscape in Switzerland and changes brought about by the pandemic
 % Weekday distribution (if we model daily basis, this needs to be accounted for,
 % different network loads over the weekdays)
 % Leeway (far from pandemic situation)
 % Mobility tool ownership shares (SP)
 % Untapped research potential (in particular, understanding decoupling can, may, want)
+% I.e., differentiate between possibility, preference and choice
 % => snndata (cite)
+
+\begin{frame}
+\frametitle{Switzerland's telework landscape and changes brought about by the pandemic}
+\begin{itemize}
+\item Pandemic has increased the telework share by 15 pp.
+% However, they have normalized (especially the fully remote workers).
+\item 60\% hold teleworkable jobs.
+\item 91\% of them wish to utilize telework.
+\item Gap of 20 pp exists between those who can work from home and those who actually do.
+\item About 1/4 of teleworkers desire to telework more frequently (why don't they?).
+\end{itemize}
+\ivtsidebar{%
+Heimgartner D, Axhausen KW (2025). \pkg{snndata} -- Data for the Project Multimodality in the Swiss New Normal. \textit{Travel Survey Metadata Series 93}, IVT, ETH Zurich.
+}%
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Untapped telework potential}
+\setkeys{Gin}{width=0.6\textwidth}
+\begin{figure}
+\centering
+<<wfh-potential, echo=FALSE, fig=TRUE, height=4, width=4.3>>=
+wfh_share_simulation$p
+@
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Implications for mobility tool ownership}
+\setkeys{Gin}{width=\textwidth}
+\begin{figure}
+\centering
+<<mto, echo=FALSE, fig=TRUE, height=7, width=9>>=
+plot.it <- function() {
+  op <- par(no.readonly = TRUE)
+  on.exit(par(op))
+  dat <- bootstrap$mat.bs
+  par(mfrow = c(3, 4))
+
+  plt <- function(x, main, col, col.zero) {
+    mean_line <- apply(x, 2, mean)
+    lower <- apply(x, 2, function(x) quantile(x, probs = 0.025))
+    upper <- apply(x, 2, function(x) quantile(x, probs = 0.975))
+    ml0 <- mean_line[1]
+    mean_line <- mean_line - ml0
+    lower <- lower - ml0
+    upper <- upper - ml0
+    mat <- t(x)
+    mat <- mat - ml0
+    matplot(x = 0:5, mat, type = "l", lty = 1, col = scales::alpha(col, alpha = 0.075),
+            xlab = "Telework frequency (d/week)",
+            ylab = "Ownership share (normalized)",
+            main = main)
+    lp <- ifelse(main == "Half-fare", "topleft", "bottomleft")
+    legend(lp, legend = c("mean", "2.5th perc.", "97.5th perc."),
+           lty = c(1, 3, 3), col = col, bty = "n")
+    grid()
+    lines(x = 0:5, y = mean_line, col = col, lwd = 2)
+    lines(x = 0:5, y = lower, col = col, lwd = 1, lty = 3)
+    lines(x = 0:5, y = upper, col = col, lwd = 1, lty = 3)
+    abline(h = 0, col = col.zero)
+  }
+
+  main <- c("Regular bike", "Car", "Car sharing", "E-bike", "National ST", "Half-fare", "Regional ST")
+  for (i in seq_along(dat)) {
+    plt(dat[[i]], main[i], datapap::my_colors$colvec[3], "darkgrey")
+  }
+}
+
+plot.it()
+@
+\end{figure}
+\begin{textblock*}{4cm}(11.5cm,6cm)  % width, (x,y)
+\small\alert{3 d/week seems to be the tipping point!}
+\end{textblock*}
+\end{frame}
 
 
 
@@ -335,6 +417,61 @@ Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time
 % Selection bias: explain intuitively (diagram and bicycle example)
 % Model and formulas
 % OPSR core (replication script of analysis)
+
+\begin{frame}
+\huge
+\vspace{1em}
+The notorious ``What if?'' question
+% Already implies counterfactuality
+\end{frame}
+
+\begin{frame}
+\frametitle{Simple group comparison masks the true treatment effect}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=\textwidth]{figures/te-illustration}
+\ivtsidebar{%
+Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{A case of a self-selection bias}
+\textbf{The problem}
+\begin{itemize}
+\item Gold standard RCT: Randomly prescribe the treatment and compare.
+\item With observational data, treatments are often self-selected.
+\item Example: Accident severity rate (the outcome) if wearing a helmet (the treatment).
+\item[$\Rightarrow$] Selection on observables and unobservables.
+\end{itemize}
+\vspace{1em}
+\textbf{The solution}
+\begin{itemize}
+\item Classical Heckman model: The sample we actually observe is not random.
+% Which leads to a vialotion of the assumed error distribution (which is truncated normal!)
+% Key idea: Estimate both processes (the process of being selected into the sample) and the outcome of interest and estimate the full multivariate error distribution.
+\item Tobit-5 model: We observe the outcome of both samples (binary treatment).
+\item[$\Rightarrow$] Ordered probit switching regression: The treatment is ordinal.
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{The OPSR model I}
+% Beautiful euler math key formulas
+\end{frame}
+
+\begin{frame}
+\frametitle{The \pkg{OPSR} \R-package}
+% Quickly, what it does and its beneifts
+% Analysis replication
+\end{frame}
 
 
 
