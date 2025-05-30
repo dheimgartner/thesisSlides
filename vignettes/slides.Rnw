@@ -451,26 +451,108 @@ Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of
 \vspace{1em}
 \textbf{The solution}
 \begin{itemize}
-\item Classical Heckman model: The sample we actually observe is not random.
+\item Classical Heckman model (Heckman, 1979): The sample we actually observe is not random.
 % Which leads to a vialotion of the assumed error distribution (which is truncated normal!)
 % Key idea: Estimate both processes (the process of being selected into the sample) and the outcome of interest and estimate the full multivariate error distribution.
 \item Tobit-5 model: We observe the outcome of both samples (binary treatment).
 \item[$\Rightarrow$] Ordered probit switching regression: The treatment is ordinal.
 \end{itemize}
+\ivtsidebar{%
+Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econometrica}, \textbf{47}(1), 153–161.
+}%
 \end{frame}
 
 
 
 
 \begin{frame}
-\frametitle{The OPSR model I}
-% Beautiful euler math key formulas
+\frametitle{The OPSR model}
+\begin{itemize}
+\item Ordered probit model + Continuous outcome model + Error correlation = OPSR
+\item Similar to a latent class model where class label is observed and the two processes aren't independent
+\item[$\Rightarrow$] Probabilities of the two processes can not simply be multiplied!
+\end{itemize}
+\vspace{2em}
+\icon{\faExclamationTriangle} \alert{$P(\text{model}) \neq \sum_{\text{class}=j}^{J} P(j) P(Y|j)$}
 \end{frame}
 
+
+
+
 \begin{frame}
-\frametitle{The \pkg{OPSR} \R-package}
-% Quickly, what it does and its beneifts
-% Analysis replication
+\frametitle{The likelihood function}
+\begin{multline} \label{eq:opsr-log-lik}
+\ell(\theta \mid \boldsymbol{W}, \boldsymbol{X_j}) = \sum_{j = 1}^{J} \sum_{\{j\}}
+\Biggl\{
+  \ln\Biggl[
+    \frac{1}{\sigma_j} \phi\Biggl(\frac{y_j - \Xb}{\sigma_j}\Biggr)
+    \Biggr] \quad + \\
+  \ln\Biggl[
+    \Phi\Biggl(
+      \frac{\sigma_j (\kappa_j - \Wg) - \rho_j(y_j - \Xb)}{\sigma_j\sqrt{1 - \rho_j^2}}
+      \Biggr) - \\
+    \Phi\Biggl(
+      \frac{\sigma_j (\kappa_{j-1} - \Wg) - \rho_j(y_j - \Xb)}{\sigma_j\sqrt{1 - \rho_j^2}}
+      \Biggr)
+    \Biggr]
+  \Biggr\}
+\end{multline}
+%
+where $\sum_{\{j\}}$ means the summation of all the cases belonging to the \jth selection outcome, $\phi(\cdot)$ and $\Phi(\cdot)$ are the density and cumulative distribution function of the standard normal distribution.
+% where ... just kidding
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{The conditional expectation}
+\begin{equation} \label{eq:opsr-cond-exp}
+\begin{aligned}
+\E[y_j \mid Z = j] &= \Xb + \E[\eta_j \mid \kappa_{j-1} - \Wg < \epsilon \le \kappa_j - \Wg] \\
+&= \Xb - \rho_j\sigma_j \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)},
+\end{aligned}
+\end{equation}
+% where the (negative) fraction is the ordered probit switching regression model counterpart to the inverse Mills ratio (IMR) term of a binary switching regression model (because of its resemblance, we will also refer to this fraction as inverse Mills ratio in the OPSR case). We immediately see, that regressing $\boldsymbol{X_j}$ on $y_j$ leads to an omitted variable bias if $\rho_j \neq 0$ which is the root cause of the selection bias. However, the IMR can be pre-computed based on an ordered probit model and then included in the second stage regression, which describes the Heckman correction \citep{Heckman:1979}.
+To obtain unbiased treatment effects, we must further evaluate the ``counterfactual outcome'', which reflects the expected outcome under a counterfactual treatment (i.e., for $j' \neq j$)
+%
+\begin{equation} \label{eq:opsr-counterfact-exp}
+\begin{aligned}
+\E[y_{j'} \mid Z = j] &= \Xbd + \E[\eta_{j'} \mid \kappa_{j-1} - \Wg < \epsilon \le \kappa_j - \Wg] \\
+&= \Xbd - \rho_{j'}\sigma_{j'} \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}.
+\end{aligned}
+\end{equation}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Translating math to code}
+\textbf{What do we want?}
+\begin{itemize}
+\item Easily and flexibly specify the processes ($\Xb$ and $\Wg$).
+\item Estimate the parameters.
+\item Summarize the model results.
+\item Easily and itteratively update the model.
+\item Compare the models.
+\item Compute (counterfactual) conditional expectations and thus treatment effects.
+\item Summarize and visualize the treatment effects.
+\item Publication grade output tables.
+\end{itemize}
+\vspace{2em}
+\icon{\faBullhorn} \alert{We want it now and we want it to be fast!}
+\end{frame}
+
+
+
+\begin{frame}
+\huge
+\vspace{1em}
+Enters: The \pkg{OPSR} \R-package
+% Without OPSR this is a considerable effort, hundreds of lines of code, and error prone
+% With OPSR this is a matter of hours (as I demonstrate now).
 \end{frame}
 
 
@@ -479,6 +561,15 @@ Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of
 %% Analysis --------------------------------------------------------------------
 \section{Analysis}
 \sectionslide{\icon{\faHashtag} Analysis}
+
+
+
+% Analysis replication
+
+%% PROCEED HERE %%
+%% analysis replication IS analysis section!!!
+
+
 
 % Cescriptives + treatment effects plot and table, then
 % Compare to not accounting for error correlation
@@ -497,6 +588,30 @@ Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of
 % END
 
 \sectionslide{\icon{\faHashtag} Appendix}
+
+\begin{frame}
+\frametitle{OPSR vs. indicator variable approach}
+\begin{columns}[T,onlytextwidth]
+\column{0.5\textwidth}
+\textbf{Indicator approach (assuming no interactions)}
+\begin{itemize}
+\item Weekly km traveled is a function of $X$ ($Y(X)$).
+\item Telework is exogenous -- i.e., there are no factors simultaneously influencing telework and the error term\\$\Rightarrow$ Level effects.
+\end{itemize}
+\alert{Treatment effect is simply the level effect of the telework indicator.}
+\column{0.5\textwidth}
+\textbf{OPSR}
+\begin{itemize}
+\item Weekly km traveled is a function of $X$ but the effect of $x$ depends on telework status $J$ ($Y(X|J)$).
+\begin{itemize}
+\item For example: The effect of having children on weekly km traveled might be different for NTWers (bring children to school as part of the commute) and UTWers (extra trip).
+\end{itemize}
+\item Telework is endogenous -- i.e., there are (unobserved) factors simultaneously influencing telework adoption and weekly km traveled.
+\end{itemize}
+\alert{Treatment effect is a result of 1. different parameters/process specifications for the groups (i.e., the $X_j\beta_j)$ and $X_{j'}\beta_{j'}$ and 2. the selection on unobservables (IMR term; see Equation~\ref{foo}).}
+\end{columns}
+\end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{\R~code}
