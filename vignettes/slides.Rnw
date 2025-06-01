@@ -14,8 +14,31 @@
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 <<preliminaries, echo=FALSE, results=hide>>=
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
+library("thesisSlides")
+library("OPSR")
 library("datapap")
 library("TWTE")
+@
+
+<<model, echo=FALSE, results=hide>>=
+data <- TWTE::data_model
+weights <- data$weight
+
+f <- wfh | log_weekly_km ~
+  wfh_allowed + teleworkability + log_commute_km + age + dogs + driverlicense +
+  fixed_workplace + hh_income + hh_size + isco_clerical + isco_managers +
+  isco_agri + n_children + freq_onl_order + parking_home + parking_work +
+  permanent_employed + sex_male + swiss |
+  start_tracking + log_commute_km + dogs + driverlicense + fixed_workplace +
+  grocery_shopper + n_children + parking_work + permanent_employed + sex_male +
+  shift_work + vacation + workload |
+  log_commute_km + dogs + fixed_workplace + grocery_shopper + hh_size +
+  married + parking_work + sex_male + shift_work + vacation + workload +
+  young_kids |
+  log_commute_km + educ_higher + hh_size + married + freq_onl_order + res_loc +
+  workload
+
+fit <- opsr(f, data, weights = weights)
 @
 
 \title{Measuring and Modeling the Impact of Telework on Transport Demand -- Data, Tools and Analysis}
@@ -344,13 +367,23 @@ Heimgartner D, Axhausen KW (2025). \pkg{snndata} -- Data for the Project Multimo
 
 \begin{frame}
 \frametitle{Untapped telework potential}
-\setkeys{Gin}{width=0.6\textwidth}
+\begin{columns}
+\column{0.6\textwidth}
+\setkeys{Gin}{width=8cm}
 \begin{figure}
 \centering
 <<wfh-potential, echo=FALSE, fig=TRUE, height=4, width=4.3>>=
 wfh_share_simulation$p
 @
 \end{figure}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Mondays and Fridays are the preferred days to telework.
+\item Potential leeway, drawing from the empirical distribution over the weekdays ($f(\text{TW freq.})$), using the stated free-choice frequency.
+\vspace{2em}
+\item[\icon{\faCompass}] \alert{Untapped telework potential between 20 and 30 pp.}
+\end{itemize}
+\end{columns}
 \end{frame}
 
 
@@ -557,6 +590,7 @@ plot.it()
 \vspace{2em}
 \icon{\faKey} \alert{Compute counterfactual expected weekly kilometers traveled (Equations~\ref{eq:opsr-cond-exp} and \ref{eq:opsr-counterfact-exp})!}
 \end{frame}
+% We should now be aware, that the descriptive group comparison is flawed!!!
 
 
 
@@ -651,29 +685,77 @@ Wald chi2 (rho): 27.4168 on 3 DF, p-value: < 0
 
 \begin{frame}
 \frametitle{Telework treatment effects}
+\begin{columns}[T,onlytextwidth]
+\column{0.6\textwidth}
+\setkeys{Gin}{width=\textwidth}
+\vspace{-2em}
+\begin{figure}
+\centering
+<<te, echo=FALSE, fig=TRUE, height=5, width=6>>=
+x <- te_plot$x
+xlabs <- te_plot$xlabs
+mat <- te_plot$mat
 
+plot.it <- function() {
+  matplot(x = x, mat, type = "b", xlab = "Telework treatment", ylab = "Weekly distance (km)",
+          axes = FALSE, pch = 19, lty = 1, lwd = 2.5, ylim = c(0, 350))
+  axis(1, at = x, labels = xlabs, padj = 0.5)
+  axis(2)
+  grid()
+  legend("topright", legend = c("NTWers", "NUTWers", "UTWers"), pch = 19, col = 1:3, lwd = 2.5, bty = "n")
+  box()
+}
+
+plot.it()
+@
+\end{figure}
+\column{0.4\textwidth}
+\begin{itemize}
+\small
+\item Counterfactual weekly km traveled are very different.
+\item Telework reduces travel of a particularly mobile group (with longer commutes).
+\item Unit treatment effects indicate, that travel reduction roughly corresponds to 2-way commute distance.
+\item Travel reduction accounts to 16\% (aligns with Sallard, 2024).
+\item Descriptive analysis shows, that time-allocation is very similar across the TWer groups -- except for travel.
+\end{itemize}
+\end{columns}
+\vspace{1em}
+\icon{\faWarning} \alert{Not accounting for error correlation underestimates treatment effects.}
+\ivtsidebar{%
+Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding Travel Demand in a Changing World}. Ph.D. thesis, ETH Zürich, Zürich
+}%
 \end{frame}
+% Remeber the boxplot from before? This was essentially comparing these three points.
 
 
-
-% Fit replication code on one slide => Even my grandfather could do it!
-% Treatment effects plot ala OPSR
-% Key takeaways => Fixing rho coefficients -- same as not accounting for error correlation
-% Not accounting for error correlation underestimates treatment effects
-% Telework reduces travel of a particularly mobile group of people (with longer commtues)
-% Travel reduction by 16%
-
-% (
-% Descriptives + treatment effects plot and table, then
-% Compare to not accounting for error correlation
-% )
 
 
 %% Outro -----------------------------------------------------------------------
-\section{TBD: Outro}
-\sectionslide{\icon{\faHashtag} TBC: Outro}
+\section{Conclusion}
+\sectionslide{\icon{\faHashtag} Conclusion}
 % See NOTES.md (starting line 28)
 % Including limitations
+
+\begin{frame}
+\frametitle{Take aways}
+\begin{itemize}
+\item Telework's main effects: 1. Foregone commutes and 2. Home (instead of CBD) as trip-origin.
+\begin{itemize}
+\item Meanwhile, mode shares are pretty stable.
+\end{itemize}
+\item Switzerland has an untapped telework potential (+20 pp TWing share on any given weekday).
+\item Elephant in the room: Employer-side constraints because of feared productivity losses.
+\item Telework has positive externalities (in particular foregone travel) which are not part of the labor market outcome.
+\begin{itemize}
+\item[$\Rightarrow$] Suboptimal telework level (right to telework?).
+\end{itemize}
+\item Mixed effects in the literature potentially because of self-selection bias.
+\item \pkg{OPSR} to easily replicate the analysis in another context and
+\item employ the method beyond the realm of transportation.
+\end{itemize}
+\vspace{1em}
+\icon{\faLegal} \alert{Selection bias is ubiquitous and may lead to adverse policy implications.}
+\end{frame}
 
 \sectionslide{\icon{\faHashtag} Thank you!}
 % With that, let's recall the collective wisdom of the audience, where XXX % said, that telework leads to less travel
@@ -768,11 +850,26 @@ plot.it()
 
 \begin{frame}
 \frametitle{\fct{pairs}}
-TODO: pairs plot ala OPSR
+\setkeys{Gin}{width=0.65\textwidth}
+\vspace{-0.5em}
+\begin{figure}
+\centering
+<<pairs, echo=FALSE, fig=TRUE, height=7, width=8>>=
+plot(fit, type = "unlog-response",
+  labels.diag = c("NTWing", "NUTWing", "UTWing"),
+  labels.reg = c("NTWers", "NUTWers", "UTWers"),
+  xlim = c(0, 800), ylim = c(0, 800), cex = 1.5)
+@
+\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Unit treatment effects of teleworking}
+\frametitle{Telework treatment effects}
+TODO: table
+\end{frame}
+
+\begin{frame}
+\frametitle{Telework unit treatment effects}
 TODO: table
 \end{frame}
 
@@ -783,18 +880,5 @@ TODO: table
 
 
 
-
-\begin{frame}[fragile]
-  \frametitle{\R~code}
-  (use ``fragile'' option for slide containing verbatim code...)
-<<>>=
-print("hello world")
-@
-\end{frame}
-
-\begin{frame}
-  \frametitle{Talking code}
-  The usual JSS commands can be used. E.g., this is \code{code}, this a \fct{function}, this a \pkg{package}, etc.
-\end{frame}
 
 \end{document}
