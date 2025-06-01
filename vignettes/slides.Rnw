@@ -15,6 +15,7 @@
 <<preliminaries, echo=FALSE, results=hide>>=
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("datapap")
+library("TWTE")
 @
 
 \title{Measuring and Modeling the Impact of Telework on Transport Demand -- Data, Tools and Analysis}
@@ -355,59 +356,6 @@ wfh_share_simulation$p
 
 
 
-\begin{frame}
-\frametitle{Implications for mobility tool ownership}
-\setkeys{Gin}{width=\textwidth}
-\begin{figure}
-\centering
-<<mto, echo=FALSE, fig=TRUE, height=7, width=9>>=
-plot.it <- function() {
-  op <- par(no.readonly = TRUE)
-  on.exit(par(op))
-  dat <- bootstrap$mat.bs
-  par(mfrow = c(3, 4))
-
-  plt <- function(x, main, col, col.zero) {
-    mean_line <- apply(x, 2, mean)
-    lower <- apply(x, 2, function(x) quantile(x, probs = 0.025))
-    upper <- apply(x, 2, function(x) quantile(x, probs = 0.975))
-    ml0 <- mean_line[1]
-    mean_line <- mean_line - ml0
-    lower <- lower - ml0
-    upper <- upper - ml0
-    mat <- t(x)
-    mat <- mat - ml0
-    matplot(x = 0:5, mat, type = "l", lty = 1, col = scales::alpha(col, alpha = 0.075),
-            xlab = "Telework frequency (d/week)",
-            ylab = "Ownership share (normalized)",
-            main = main)
-    lp <- ifelse(main == "Half-fare", "topleft", "bottomleft")
-    legend(lp, legend = c("mean", "2.5th perc.", "97.5th perc."),
-           lty = c(1, 3, 3), col = col, bty = "n")
-    grid()
-    lines(x = 0:5, y = mean_line, col = col, lwd = 2)
-    lines(x = 0:5, y = lower, col = col, lwd = 1, lty = 3)
-    lines(x = 0:5, y = upper, col = col, lwd = 1, lty = 3)
-    abline(h = 0, col = col.zero)
-  }
-
-  main <- c("Regular bike", "Car", "Car sharing", "E-bike", "National ST", "Half-fare", "Regional ST")
-  for (i in seq_along(dat)) {
-    plt(dat[[i]], main[i], datapap::my_colors$colvec[3], "darkgrey")
-  }
-}
-
-plot.it()
-@
-\end{figure}
-\begin{textblock*}{4cm}(11.5cm,6cm)  % width, (x,y)
-\small\alert{3 d/week seems to be the tipping point!}
-\end{textblock*}
-\end{frame}
-
-
-
-
 %% Tools -----------------------------------------------------------------------
 \section{Tools}
 \sectionslide{\icon{\faHashtag} Tools}
@@ -469,18 +417,18 @@ Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econom
 \frametitle{The OPSR model}
 \begin{itemize}
 \item Ordered probit model + Continuous outcome model + Error correlation = OPSR
-\item Similar to a latent class model where class label is observed and the two processes aren't independent
+\item Similar to a latent class model where class label is observed and the two processes aren't independent.
 \item[$\Rightarrow$] Probabilities of the two processes can not simply be multiplied!
 \end{itemize}
 \vspace{2em}
-\icon{\faExclamationTriangle} \alert{$P(\text{model}) \neq \sum_{\text{class}=j}^{J} P(j) P(Y|j)$}
+\icon{\faExclamationTriangle} \alert{$P_{\text{latent class}} = \sum_{\text{class}=j}^{J} P(j) P(Y|j) \Leftrightarrow P_{\text{OPSR}} \neq \sum_{\text{treatment}=j}^{J} P(j) P(Y|j)$}
 \end{frame}
 
 
 
 
 \begin{frame}
-\frametitle{The likelihood function}
+\frametitle{The log-likelihood function}
 \begin{multline} \label{eq:opsr-log-lik}
 \ell(\theta \mid \boldsymbol{W}, \boldsymbol{X_j}) = \sum_{j = 1}^{J} \sum_{\{j\}}
 \Biggl\{
@@ -499,7 +447,8 @@ Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econom
 \end{multline}
 %
 where $\sum_{\{j\}}$ means the summation of all the cases belonging to the \jth selection outcome, $\phi(\cdot)$ and $\Phi(\cdot)$ are the density and cumulative distribution function of the standard normal distribution.
-% where ... just kidding
+% where ... just kidding - I am not gonna harass you with formulas
+% next slide... or am I?
 \end{frame}
 
 
@@ -507,6 +456,8 @@ where $\sum_{\{j\}}$ means the summation of all the cases belonging to the \jth 
 
 \begin{frame}
 \frametitle{The conditional expectation}
+(OLS: $\E[y_j] = \Xb$)
+% What is different?
 \begin{equation} \label{eq:opsr-cond-exp}
 \begin{aligned}
 \E[y_j \mid Z = j] &= \Xb + \E[\eta_j \mid \kappa_{j-1} - \Wg < \epsilon \le \kappa_j - \Wg] \\
@@ -569,18 +520,153 @@ Available on CRAN now.\textsuperscript{*}\\
 \section{Analysis}
 \sectionslide{\icon{\faHashtag} Analysis}
 
+\begin{frame}
+\frametitle{What if current teleworkers were not teleworking?}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\setkeys{Gin}{width=5.5cm}
+\vspace{-2em}
+\begin{figure}
+\centering
+<<twstatus-weekly, echo=FALSE, fig=TRUE, height=4.3, width=4>>=
+plot.it <- function() {
+  boxplot(vmd / 1e3 ~ wfh, data = TWTE::data_analytic$weekly_indicators$vmd,
+          col = "white",
+          xlab = "Telework status",
+          ylab = "Distance traveled (km)",
+          main = "",
+          notch = TRUE,
+          outcol = scales::alpha("black", 0.1))
+}
+plot.it()
+@
+\end{figure}
+\column{0.6\textwidth}
+\begin{itemize}
+\item TimeUse+ tracking data from 879 individuals (2022-07-18 -- 2023-02-09).
+\item Infer telework status from time-use diary (tracked telework episodes).
+\begin{itemize}
+\item Non-teleworkers (NTWers; N=492)
+\item Non-usual teleworkers (NUTWers; <3 days/week; N=259)
+\item Usual teleworkers (UTWers; 3+ days/week; N=128)
+\end{itemize}
+\item Infer weekly kilometers traveled (across all modes).
+\item Use the OPSR methodology to get unbiased treatment effects.
+\end{itemize}
+\end{columns}
+\vspace{2em}
+\icon{\faKey} \alert{Compute counterfactual expected weekly kilometers traveled (Equations~\ref{eq:opsr-cond-exp} and \ref{eq:opsr-counterfact-exp})!}
+\end{frame}
 
 
-% Analysis replication
-
-%% PROCEED HERE %%
-%% analysis replication IS analysis section!!!
 
 
+\begin{frame}[fragile]
+\frametitle{\pkg{OPSR} script}
+\small
+<<opsr-script, eval=FALSE>>=
+f <- wfh | log_weekly_km ~
+  wfh_allowed + teleworkability + log_commute_km + age + dogs + driverlicense +
+  fixed_workplace + hh_income + hh_size + isco_clerical + isco_managers +
+  isco_agri + n_children + freq_onl_order + parking_home + parking_work +
+  permanent_employed + sex_male + swiss |
+  start_tracking + log_commute_km + dogs + driverlicense + fixed_workplace +
+  grocery_shopper + n_children + parking_work + permanent_employed + sex_male +
+  shift_work + vacation + workload |
+  log_commute_km + dogs + fixed_workplace + grocery_shopper + hh_size +
+  married + parking_work + sex_male + shift_work + vacation + workload +
+  young_kids |
+  log_commute_km + educ_higher + hh_size + married + freq_onl_order + res_loc +
+  workload
 
-% Cescriptives + treatment effects plot and table, then
+fit <- opsr(f, data, weights = weights)
+summary(fit)
+
+plot(fit, type = "unlog-response")
+opsr_te(fit, type = "unlog-response")
+@
+\end{frame}
+
+% The replication code of the analysis fits on one slide and estimation and
+% post-estimation is super easy -- even my grandfather could do it!
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Wald test suggests that there is error correlation I}
+\small
+<<opsr-summary, eval=FALSE>>=
+print(summary(fit), print.call = FALSE)
+@
+\begin{Soutput}
+BFGS maximization, 344 iterations
+Return code 0: successful convergence
+Runtime: 3.26 secs
+Number of regimes: 3
+Number of observations: 879 (492, 259, 128)
+Estimated parameters: 71
+
+Log-Likelihood: -1015.052
+AIC: 2172.104
+BIC: 2511.398
+Pseudo R-squared (EL): 0.3053
+Pseudo R-squared (MS): 0.2095
+Multiple R-squared: 0.6136 (0.6419, 0.6553, 0.3222)
+...
+\end{Soutput}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Wald test suggests that there is error correlation II}
+\small
+\begin{Soutput}
+Estimates:
+                        Estimate Std. error t value  Pr(> t)
+kappa1                  2.386065   0.755027   3.160 0.001576 **
+kappa2                  3.601433   0.754574   4.773 1.82e-06 ***
+s_teleworkability       0.253970   0.035869   7.080 1.44e-12 ***
+...
+o1_(Intercept)          2.888933   0.306988   9.411  < 2e-16 ***
+...
+sigma1                  0.393013   0.020533  19.141  < 2e-16 ***
+sigma2                  0.411519   0.038681  10.639  < 2e-16 ***
+sigma3                  0.462633   0.063710   7.262 3.83e-13 ***
+rho1                    0.186624   0.422601   0.442 0.658774
+rho2                    0.502810   0.096370   5.217 1.81e-07 ***
+rho3                    0.198015   0.396531   0.499 0.617520
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Wald chi2 (null): 1647.465 on 60 DF, p-value: < 0
+Wald chi2 (rho): 27.4168 on 3 DF, p-value: < 0
+\end{Soutput}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Telework treatment effects}
+
+\end{frame}
+
+
+
+% Fit replication code on one slide => Even my grandfather could do it!
+% Treatment effects plot ala OPSR
+% Key takeaways => Fixing rho coefficients -- same as not accounting for error correlation
+% Not accounting for error correlation underestimates treatment effects
+% Telework reduces travel of a particularly mobile group of people (with longer commtues)
+% Travel reduction by 16%
+
+% (
+% Descriptives + treatment effects plot and table, then
 % Compare to not accounting for error correlation
-
+% )
 
 
 %% Outro -----------------------------------------------------------------------
@@ -595,6 +681,64 @@ Available on CRAN now.\textsuperscript{*}\\
 % END
 
 \sectionslide{\icon{\faHashtag} Appendix}
+
+\begin{frame}
+\frametitle{Limitations}
+TODO
+\end{frame}
+
+\begin{frame}
+\frametitle{Implications for mobility tool ownership}
+\setkeys{Gin}{width=\textwidth}
+\begin{figure}
+\centering
+<<mto, echo=FALSE, fig=TRUE, height=7, width=9>>=
+plot.it <- function() {
+  op <- par(no.readonly = TRUE)
+  on.exit(par(op))
+  dat <- bootstrap$mat.bs
+  par(mfrow = c(3, 4))
+
+  plt <- function(x, main, col, col.zero) {
+    mean_line <- apply(x, 2, mean)
+    lower <- apply(x, 2, function(x) quantile(x, probs = 0.025))
+    upper <- apply(x, 2, function(x) quantile(x, probs = 0.975))
+    ml0 <- mean_line[1]
+    mean_line <- mean_line - ml0
+    lower <- lower - ml0
+    upper <- upper - ml0
+    mat <- t(x)
+    mat <- mat - ml0
+    matplot(x = 0:5, mat, type = "l", lty = 1, col = scales::alpha(col, alpha = 0.075),
+            xlab = "Telework frequency (d/week)",
+            ylab = "Ownership share (normalized)",
+            main = main)
+    lp <- ifelse(main == "Half-fare", "topleft", "bottomleft")
+    legend(lp, legend = c("mean", "2.5th perc.", "97.5th perc."),
+           lty = c(1, 3, 3), col = col, bty = "n")
+    grid()
+    lines(x = 0:5, y = mean_line, col = col, lwd = 2)
+    lines(x = 0:5, y = lower, col = col, lwd = 1, lty = 3)
+    lines(x = 0:5, y = upper, col = col, lwd = 1, lty = 3)
+    abline(h = 0, col = col.zero)
+  }
+
+  main <- c("Regular bike", "Car", "Car sharing", "E-bike", "National ST", "Half-fare", "Regional ST")
+  for (i in seq_along(dat)) {
+    plt(dat[[i]], main[i], datapap::my_colors$colvec[3], "darkgrey")
+  }
+}
+
+plot.it()
+@
+\end{figure}
+\begin{textblock*}{4cm}(11.5cm,6cm)  % width, (x,y)
+\small\alert{3 d/week seems to be the tipping point!}
+\end{textblock*}
+\end{frame}
+
+
+
 
 \begin{frame}
 \frametitle{OPSR vs. indicator variable approach}
@@ -615,9 +759,29 @@ Available on CRAN now.\textsuperscript{*}\\
 \end{itemize}
 \item Telework is endogenous -- i.e., there are (unobserved) factors simultaneously influencing telework adoption and weekly km traveled.
 \end{itemize}
-\alert{Treatment effect is a result of 1. different parameters/process specifications for the groups (i.e., the $X_j\beta_j)$ and $X_{j'}\beta_{j'}$ and 2. the selection on unobservables (IMR term; see Equation~\ref{foo}).}
+\alert{Treatment effect is a result of 1. different parameters/process specifications for the groups (i.e., the $X_j\beta_j)$ and $X_{j'}\beta_{j'}$ and 2. the selection on unobservables (IMR term; see Equations~\ref{eq:opsr-cond-exp} and \ref{eq:opsr-counterfact-exp}).}
 \end{columns}
 \end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{\fct{pairs}}
+TODO: pairs plot ala OPSR
+\end{frame}
+
+\begin{frame}
+\frametitle{Unit treatment effects of teleworking}
+TODO: table
+\end{frame}
+
+\begin{frame}
+\frametitle{Not accounting for error correlation underestimates the treatment effects}
+TODO: table
+\end{frame}
+
+
 
 
 \begin{frame}[fragile]
