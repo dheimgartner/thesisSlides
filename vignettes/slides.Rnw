@@ -143,6 +143,15 @@ Wer denkt, dass Home Office zu weniger Verkehr führt?
 % Data + Tools + Analysis (three columns)
 
 \begin{frame}
+\frametitle{Like it or not -- our everyday lives are organized around work}
+TODO: Index plots
+\end{frame}
+% If the where + when of work changes, this must have implications for transport demand.
+
+
+
+
+\begin{frame}
 \frametitle{Transport sector as major greenhouse gas emittor}
 \begin{itemize}
 \item Transport sector contributes 15\% of global greenhouse gas emissions (IPCC, 2022). % cite
@@ -179,14 +188,6 @@ Barrero JM, Bloom N, Davis SJ (2023). The Evolution of Work From Home. \textit{J
 Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energy and Climate Impacts of Teleworking. \textit{Environmental Research Letters}, \textbf{15}(9), 093003.
 }%
 \end{frame}
-
-
-
-\begin{frame}
-\frametitle{Like it or not -- our everyday lives are organized around work}
-TODO: Index plots
-\end{frame}
-% If the where + when of work changes, this must have implications for transport demand.
 
 
 
@@ -645,8 +646,8 @@ f <- wfh | log_weekly_km ~
 fit <- opsr(f, data, weights = weights)
 summary(fit)
 
-plot(fit, type = "unlog-response")
 opsr_te(fit, type = "unlog-response")
+plot(fit, type = "unlog-response")
 @
 \end{frame}
 
@@ -657,7 +658,7 @@ opsr_te(fit, type = "unlog-response")
 
 
 \begin{frame}[fragile]
-\frametitle{\fct{summary}}
+\frametitle{\code{R> summary(fit)}}
 \small
 <<opsr-summary, eval=FALSE>>=
 print(summary(fit), print.call = FALSE)
@@ -719,20 +720,30 @@ Wald chi2 (rho): 27.4168 on 3 DF, p-value: < 0
 \E[y_j \mid Z = j] = \Xb - \alert{\rho_j}\sigma_j \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}
 \end{equation*}
 \ivtsidebar{%
-\url{https://github.com/dheimgartner/thesisSlides/blob/main/vignettes/figures/proud.gif}
+\url{https://github.com/dheimgartner/thesisSlides/blob/main/vignettes/figures/heckman-would-be-proud.gif}
 }%
 \end{frame}
 
 
 
 
+\begin{frame}[fragile]
+\frametitle{\code{R> opsr\_te(fit, type = "unlog-response")}}
+<<opsr-te, echo=FALSE>>=
+opsr_te(fit, type = "unlog-response")
+@
+\end{frame}
+
+
+
+
 \begin{frame}
-\frametitle{\fct{pairs}}
+\frametitle{\code{R> plot(fit, type = "unlog-response")}}
 \setkeys{Gin}{width=0.65\textwidth}
 \vspace{-0.5em}
 \begin{figure}
 \centering
-<<pairs, echo=FALSE, fig=TRUE, height=7, width=8>>=
+<<opsr-plot, echo=FALSE, fig=TRUE, height=7, width=8>>=
 plot(fit, type = "unlog-response",
   labels.diag = c("NTWing", "NUTWing", "UTWing"),
   labels.reg = c("NTWers", "NUTWers", "UTWers"),
@@ -740,23 +751,6 @@ plot(fit, type = "unlog-response",
 @
 \end{figure}
 \end{frame}
-
-
-
-
-\begin{frame}[fragile]
-\frametitle{Telework treatment effects}
-\begin{table}
-\centering
-<<te-table, echo=FALSE, results=tex>>=
-tab <- TWTE::model_km$table_ate
-tab <- gsub("\\\\toprule", "", tab)
-cat(tab)
-@
-\label{tab:te}
-\end{table}
-\end{frame}
-
 
 
 
@@ -945,6 +939,22 @@ plot.it()
 \end{itemize}
 \alert{Treatment effect is a result of 1. different parameters/process specifications for the groups (i.e., the $X_j\beta_j)$ and $X_{j'}\beta_{j'}$ and 2. the selection on unobservables (IMR term; see Equations~\ref{eq:opsr-cond-exp} and \ref{eq:opsr-counterfact-exp}).}
 \end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Telework treatment effects}
+\begin{table}
+\centering
+<<te-table, echo=FALSE, results=tex>>=
+tab <- TWTE::model_km$table_ate
+tab <- gsub("\\\\toprule", "", tab)
+cat(tab)
+@
+\label{tab:te}
+\end{table}
 \end{frame}
 
 
