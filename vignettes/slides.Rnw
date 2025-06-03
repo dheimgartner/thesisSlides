@@ -166,6 +166,7 @@ BAFU (2024). Kenngrössen zur Entwicklung der Treibhausgasemissionen in der Schw
 \begin{itemize}
 \item First paper: Mobility changes brought about by the pandemic.
 \begin{itemize}
+\item Adjustments to the extraordinary circumstances were not made habitual (e.g., not a change in underlying preferences, but ``applying'' these preferences in a new environment).
 \item Mode shares expected to reach pre-pandemic levels.
 \end{itemize}
 \item Telework shares quadrupled during the pandemic (Barrero et al., 2023). % cite
@@ -178,6 +179,14 @@ Barrero JM, Bloom N, Davis SJ (2023). The Evolution of Work From Home. \textit{J
 Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energy and Climate Impacts of Teleworking. \textit{Environmental Research Letters}, \textbf{15}(9), 093003.
 }%
 \end{frame}
+
+
+
+\begin{frame}
+\frametitle{Like it or not -- our everyday lives are organized around work}
+TODO: Index plots
+\end{frame}
+% If the where + when of work changes, this must have implications for transport demand.
 
 
 
@@ -233,7 +242,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{itemize}
 
 \column{0.3\textwidth}
-\vspace{5em}
+\vspace{4em}
 \greyout{\textbf{Tools}}
 \begin{greyitemize}
 \small
@@ -242,7 +251,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \column{0.3\textwidth}
-\vspace{10em}
+\vspace{8em}
 \greyout{\textbf{Analysis}}
 \begin{greyitemize}
 \small
@@ -251,8 +260,13 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{Rich data source to investigate telework in Switzerland.}
+\ivtsidebar{%
+\url{https://www.research-collection.ethz.ch/handle/20.500.11850/737879}
+}%
 \end{frame}
-
+% Untapped research potential -- link!
 
 
 
@@ -273,7 +287,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \column{0.3\textwidth}
-\vspace{5em}
+\vspace{4em}
 \textbf{Tools}
 \begin{itemize}
 \small
@@ -282,7 +296,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{itemize}
 
 \column{0.3\textwidth}
-\vspace{10em}
+\vspace{8em}
 \greyout{\textbf{Analysis}}
 \begin{greyitemize}
 \small
@@ -291,6 +305,11 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{\pkg{OPSR} statistical software.}
+\ivtsidebar{%
+\url{https://cran.r-project.org/package=OPSR}
+}%
 \end{frame}
 
 
@@ -313,7 +332,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \column{0.3\textwidth}
-\vspace{5em}
+\vspace{4em}
 \greyout{\textbf{Tools}}
 \begin{greyitemize}
 \small
@@ -322,7 +341,7 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{greyitemize}
 
 \column{0.3\textwidth}
-\vspace{10em}
+\vspace{8em}
 \textbf{Analysis}
 \begin{itemize}
 \small
@@ -331,6 +350,8 @@ Does telework lead to more or less travel, in Switzerland?\\
 \end{itemize}
 
 \end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{Estimating telework treatment effects leveraging RP data and being mindful of selection bias.}
 \ivtsidebar{%
 Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time Use and Expenditure Data Based on GPS Tracks. \textit{Transportation}, pp. 1–27.
 }%
@@ -355,7 +376,11 @@ Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time
 \begin{frame}
 \frametitle{Switzerland's telework landscape and changes brought about by the pandemic}
 \begin{itemize}
-\item Pandemic has increased the telework share by 15 pp. ACTUAL NUMBERS?
+\item Pandemic has increased the telework share by 15 pp.
+\begin{itemize}
+\item ...to around 40\% (who occasionally telework).
+\item ``over-supply'' during COVID (<50\% and very high share of fully remote TWers).
+\end{itemize}
 % However, they have normalized (especially the fully remote workers).
 \item 60\% hold teleworkable jobs.
 \item 91\% of them wish to utilize telework.
@@ -632,7 +657,7 @@ opsr_te(fit, type = "unlog-response")
 
 
 \begin{frame}[fragile]
-\frametitle{Wald test suggests that there is error correlation I}
+\frametitle{\fct{summary}}
 \small
 <<opsr-summary, eval=FALSE>>=
 print(summary(fit), print.call = FALSE)
@@ -659,7 +684,7 @@ Multiple R-squared: 0.6136 (0.6419, 0.6553, 0.3222)
 
 
 \begin{frame}[fragile]
-\frametitle{Wald test suggests that there is error correlation II}
+\frametitle{Wald test suggests that there is error correlation}
 \small
 \begin{Soutput}
 Estimates:
@@ -682,6 +707,40 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Wald chi2 (null): 1647.465 on 60 DF, p-value: < 0
 Wald chi2 (rho): 27.4168 on 3 DF, p-value: < 0
 \end{Soutput}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{\fct{pairs}}
+\setkeys{Gin}{width=0.65\textwidth}
+\vspace{-0.5em}
+\begin{figure}
+\centering
+<<pairs, echo=FALSE, fig=TRUE, height=7, width=8>>=
+plot(fit, type = "unlog-response",
+  labels.diag = c("NTWing", "NUTWing", "UTWing"),
+  labels.reg = c("NTWers", "NUTWers", "UTWers"),
+  xlim = c(0, 800), ylim = c(0, 800), cex = 1.5)
+@
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Telework treatment effects}
+\begin{table}
+\centering
+<<te-table, echo=FALSE, results=tex>>=
+tab <- TWTE::model_km$table_ate
+tab <- gsub("\\\\toprule", "", tab)
+cat(tab)
+@
+\label{tab:te}
+\end{table}
 \end{frame}
 
 
@@ -745,6 +804,7 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 \begin{itemize}
 \item Telework's main effects: 1. Foregone commutes and 2. Home (instead of CBD) as trip-origin.
 \begin{itemize}
+\item Less travel and potentially less concentrated.
 \item Meanwhile, mode shares are pretty stable.
 \end{itemize}
 \item Switzerland has an untapped telework potential (+20 pp TWing share on any given weekday).
@@ -774,6 +834,7 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 \begin{frame}
 \frametitle{Limitations}
 \begin{itemize}
+\item The case of Switzerland (but: \pkg{OPSR} to easily replicate the analysis, e.g., based on national census).
 \item Multivariate normal only one possible error distribution.
 \begin{itemize}
 \item Distributional assumptions should be checked (but how? $\epsilon$ is latent).
@@ -875,39 +936,6 @@ plot.it()
 
 
 
-\begin{frame}
-\frametitle{\fct{pairs}}
-\setkeys{Gin}{width=0.65\textwidth}
-\vspace{-0.5em}
-\begin{figure}
-\centering
-<<pairs, echo=FALSE, fig=TRUE, height=7, width=8>>=
-plot(fit, type = "unlog-response",
-  labels.diag = c("NTWing", "NUTWing", "UTWing"),
-  labels.reg = c("NTWers", "NUTWers", "UTWers"),
-  xlim = c(0, 800), ylim = c(0, 800), cex = 1.5)
-@
-\end{figure}
-\end{frame}
-
-
-
-
-\begin{frame}[fragile]
-\frametitle{Telework treatment effects}
-\begin{table}
-\centering
-<<te-table, echo=FALSE, results=tex>>=
-tab <- TWTE::model_km$table_ate
-tab <- gsub("\\\\toprule", "", tab)
-cat(tab)
-@
-\end{table}
-\end{frame}
-
-
-
-
 \begin{frame}[fragile]
 \frametitle{Telework unit treatment effects}
 \begin{table}
@@ -917,6 +945,7 @@ tab <- TWTE::model_km$table_ute
 cat(tab)
 @
 \end{table}
+Unit treatment effects (UTE) are computed by dividing the TE (from page~\ref{tab:te}) by the difference in telework frequency.
 \end{frame}
 
 \begin{frame}

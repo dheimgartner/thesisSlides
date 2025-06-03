@@ -6,7 +6,7 @@ short definition/explanation of what telework is
 
 evolution of telework, the pandemic as catalyst (a la bloom) and some graph from the first paper: very quickly, results of the first paper (expected normalization after the pandemic - no significant preference differences across telework population regarding mode shares => telework being the lasting legacy of the pandemic)
 
-understanding transport demand is very complex (maybe from utility maximizing perspective?): why do people travel, how do they travel, where do they travl, what route do they choose, how do they respond to external conditions (e.g., network conditions) => on weekdays, we sleep and work. and we usually don't travel while sleeping. our everyday life is organized around work. and if this dimension changes it is easy to imagine that our daily travel and time-use patterns change profoundly.
+understanding transport demand is very complex (maybe from utility maximizing perspective?): why do people travel, how do they travel, where do they travel, what route do they choose, how do they respond to external conditions (e.g., network conditions) => on weekdays, we sleep and work. and we usually don't travel while sleeping. our everyday life is organized around work. and if this dimension changes it is easy to imagine that our daily travel and time-use patterns change profoundly.
 
 understanding telework is multi-facetted with many dimensions being impacted and could be investigated (examples)
 also question of short (daily decision), medium (my analysis) and long-term (e.g., relocation decisions)
