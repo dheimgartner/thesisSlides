@@ -713,6 +713,20 @@ Wald chi2 (rho): 27.4168 on 3 DF, p-value: < 0
 
 
 \begin{frame}
+\Large
+\vspace{1em}
+\begin{equation*}
+\E[y_j \mid Z = j] = \Xb - \alert{\rho_j}\sigma_j \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}
+\end{equation*}
+\ivtsidebar{%
+\url{https://media.tenor.com/X9jgpiApABcAAAAM/yes-nod.gif}
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
 \frametitle{\fct{pairs}}
 \setkeys{Gin}{width=0.65\textwidth}
 \vspace{-0.5em}
