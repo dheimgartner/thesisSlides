@@ -75,7 +75,7 @@ plot_idx <- function(idx_dat, labs = list(), main = NULL, cpal = NULL, cs = 1, x
 
 plot.it <- function() {
   file <- "./vignettes/figures/full_index_plot.png"
-  png(file, height = 8, width = 11, units = "in", res = 2 * 144)
+  png(file, height = 6, width = 9, units = "in", res = 2 * 144)
   op <- par(no.readonly = TRUE)
   on.exit(par(op))
   par(mfcol = c(2, 2), mar = c(1, 2, 1, 1), oma = c(3, 2, 2, 2),  #c(5.1, 4.1, 4.1, 2.1)

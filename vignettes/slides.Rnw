@@ -143,8 +143,9 @@ Wer denkt, dass Home Office zu weniger Verkehr führt?
 % Data + Tools + Analysis (three columns)
 
 \begin{frame}
-\frametitle{Like it or not -- our everyday lives are organized around work}
-TODO: Index plots
+\frametitle{Like it or not -- our everyday lifes are organized around work}
+\centering
+\includegraphics[width=11.5cm]{figures/full_index_plot}
 \end{frame}
 % If the where + when of work changes, this must have implications for transport demand.
 
