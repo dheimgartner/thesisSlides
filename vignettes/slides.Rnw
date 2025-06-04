@@ -440,10 +440,7 @@ where...
 To obtain unbiased treatment effects, we must further evaluate the ``counterfactual outcome'', which reflects the expected outcome under a counterfactual treatment (i.e., for $j' \neq j$)
 %
 \begin{equation} \label{eq:opsr-counterfact-exp}
-\begin{aligned}
-\E[\alert{y_{j'}} \mid Z = j] &= \alert{\Xbd} + \E[\alert{\eta_{j'}} \mid \kappa_{j-1} - \Wg < \epsilon \le \kappa_j - \Wg] \\
-&= \alert{\Xbd} - \alert{\rho_{j'}\sigma_{j'}} \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}
-\end{aligned}
+\E[\alert{y_{j'}} \mid Z = j] = \alert{\Xbd} - \alert{\rho_{j'}\sigma_{j'}} \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}
 \end{equation}
 If $\rho_j \neq 0$ and/or $\rho_{j'} \neq 0$ then the treatment effect is not simply $\Xb - \Xbd$ but
 \begin{equation}
