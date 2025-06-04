@@ -161,30 +161,10 @@ Wer denkt, dass Home Office zu weniger Verkehr führt?
 \item Behavioral change too...
 \end{itemize}
 \vspace{2em}
-\icon{\faCutlery} \alert{Is telework a free lunch?}
+\icon{\faCutlery} \alert{Is telework a free lunch? However: Evidence on the direction of the effect is mixed (Hook et al., 2020).} % cite}
 \ivtsidebar{%
-IPCC (2022). Climate Change 2022: Mitigation of Climate Change. \textit{Technical report}, Contribution of Working Group III to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change.\\
+IPCC (2022). Climate Change 2022: Mitigation of Climate Change. \textit{Technical report}, Contribution of Working Group III to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change.
 BAFU (2024). Kenngrössen zur Entwicklung der Treibhausgasemissionen in der Schweiz 1990–2022. \textit{Technical report}, Bundesamt für Umwelt (BAFU), Bern.
-}%
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{Long-standing interest in the relation between telework and transport demand}
-\begin{itemize}
-\item First paper: Mobility changes brought about by the pandemic.
-\begin{itemize}
-\item Adjustments to the extraordinary circumstances were not made habitual (e.g., not a change in underlying preferences, but ``applying'' these preferences in a new environment).
-\end{itemize}
-\item Telework shares quadrupled during the pandemic (Barrero et al., 2023). % cite
-\item Telework as the lasting legacy of the pandemic reignited the interest.
-\end{itemize}
-\vspace{2em}
-\icon{\faBalanceScale} \alert{However: Evidence on the direction of the effect is mixed (Hook et al., 2020).} % cite
-\ivtsidebar{%
-Barrero JM, Bloom N, Davis SJ (2023). The Evolution of Work From Home. \textit{Journal of Economic Perspectives}, \textbf{37}(4), 23–50.\\
 Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energy and Climate Impacts of Teleworking. \textit{Environmental Research Letters}, \textbf{15}(9), 093003.
 }%
 \end{frame}
@@ -205,7 +185,7 @@ Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energ
 \vspace{2em}
 \icon{\faLineChart} \alert{Scholarly work of the past decade leans to support evidence that telework induces more travel (Wang and Mokhtarian, 2024).} % cite
 \ivtsidebar{%
-de Vos D, Meijers E, van Ham M (2018). Working From Home and the Willingness to Accept a Longer Commute. \textit{The Annals of Regional Science}, \textbf{61}(2), 375–398.\\
+de Vos D, Meijers E, van Ham M (2018). Working From Home and the Willingness to Accept a Longer Commute. \textit{The Annals of Regional Science}, \textbf{61}(2), 375–398.
 Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
 }%
 \end{frame}
@@ -221,141 +201,6 @@ Does telework lead to more or less travel, in Switzerland?\\
 }
 \vspace{2em}
 \icon{\faArrowsAlt} \alert{Measuring and (therefore) modeling the impact of telework on transport demand.}
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{Data, \greyout{tools and analysis}}
-\begin{columns}[T,onlytextwidth]
-\column{0.4\textwidth}
-\textbf{Data}
-\begin{itemize}
-\small
-\item Three stage survey instrument (fielded after the pandemic).
-\item Understand the (evolution of the) telework landscape in Switzerland.
-\item Two stated preference experiments.
-\begin{itemize}
-\item Leverage of employer-side incentives (hybrid work arrangements).
-\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
-\end{itemize}
-\end{itemize}
-
-\column{0.3\textwidth}
-\vspace{4em}
-\greyout{\textbf{Tools}}
-\begin{greyitemize}
-\small
-\item Suitable modeling framework.
-\item Implementation thereof in \R.
-\end{greyitemize}
-
-\column{0.3\textwidth}
-\vspace{8em}
-\greyout{\textbf{Analysis}}
-\begin{greyitemize}
-\small
-\item Applying the tools to
-\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app).
-\end{greyitemize}
-
-\end{columns}
-\vspace{1em}
-\icon{\faFlask} \alert{Rich data source to investigate telework in Switzerland.}
-\ivtsidebar{%
-\url{https://www.research-collection.ethz.ch/handle/20.500.11850/737879}
-}%
-\end{frame}
-% Untapped research potential -- link!
-
-
-
-\begin{frame}
-\frametitle{\greyout{Data,} tools \greyout{and analysis}}
-\begin{columns}[T,onlytextwidth]
-\column{0.4\textwidth}
-\greyout{\textbf{Data}}
-\begin{greyitemize}
-\small
-\item Three stage survey instrument (fielded after the pandemic).
-\item Understand the (evolution of the) telework landscape in Switzerland.
-\item Two stated preference experiments.
-\begin{itemize}
-\item Leverage of employer-side incentives (hybrid work arrangements).
-\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
-\end{itemize}
-\end{greyitemize}
-
-\column{0.3\textwidth}
-\vspace{4em}
-\textbf{Tools}
-\begin{itemize}
-\small
-\item Suitable modeling framework.
-\item Implementation thereof in \R.
-\end{itemize}
-
-\column{0.3\textwidth}
-\vspace{8em}
-\greyout{\textbf{Analysis}}
-\begin{greyitemize}
-\small
-\item Applying the tools to
-\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app).
-\end{greyitemize}
-
-\end{columns}
-\vspace{1em}
-\icon{\faFlask} \alert{\pkg{OPSR} statistical software.}
-\ivtsidebar{%
-\url{https://cran.r-project.org/package=OPSR}
-}%
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{\greyout{Data, tools and} analysis}
-\begin{columns}[T,onlytextwidth]
-\column{0.4\textwidth}
-\greyout{\textbf{Data}}
-\begin{greyitemize}
-\small
-\item Three stage survey instrument (fielded after the pandemic).
-\item Understand the (evolution of the) telework landscape in Switzerland.
-\item Two stated preference experiments.
-\begin{itemize}
-\item Leverage of employer-side incentives (hybrid work arrangements).
-\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
-\end{itemize}
-\end{greyitemize}
-
-\column{0.3\textwidth}
-\vspace{4em}
-\greyout{\textbf{Tools}}
-\begin{greyitemize}
-\small
-\item Suitable modeling framework.
-\item Implementation thereof in \R.
-\end{greyitemize}
-
-\column{0.3\textwidth}
-\vspace{8em}
-\textbf{Analysis}
-\begin{itemize}
-\small
-\item Applying the tools to
-\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app; Winkler et al., 2024). % cite
-\end{itemize}
-
-\end{columns}
-\vspace{1em}
-\icon{\faFlask} \alert{Estimating telework treatment effects leveraging RP data and being mindful of selection bias.}
-\ivtsidebar{%
-Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time Use and Expenditure Data Based on GPS Tracks. \textit{Transportation}, pp. 1–27.
-}%
 \end{frame}
 
 
@@ -491,16 +336,45 @@ Those doing a PhD at ETH Zurich & may be losers in the first place\\
 
 
 
-
 \begin{frame}
-\frametitle{Simple group comparison masks the true treatment effect}
+\frametitle{Wrong (group comparison)}
 % The illusion of comparing groups
 % Modeling it as an indicator
 % Selection on observables and unobservables
-\includegraphics[width=\textwidth]{figures/te-illustration-2}
+\includegraphics[width=0.92\textwidth]{figures/te-illustration-1}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Still wrong (controlling for observables)}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=0.92\textwidth]{figures/te-illustration-2}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Right but not observable (longitudinal estimate)}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=\textwidth]{figures/te-illustration-3}
 \ivtsidebar{%
 Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
 }%
+\end{frame}
+
+
+
+
+\begin{frame}
+\huge
+\vspace{1em}
+What the heck, man! What should we do?
 \end{frame}
 
 
@@ -853,16 +727,11 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 \begin{itemize}
 \item Telework's main effects: 1. Foregone commutes and 2. Home (instead of CBD) as trip-origin.
 \begin{itemize}
-\item Less travel and potentially less concentrated.
-\item Meanwhile, mode shares are pretty stable.
+\item Less travel (-16\%) and less concentrated (both in time and space).
+\item Meanwhile, mobility tool ownership and mode shares are pretty stable.
 \end{itemize}
 \item Switzerland has an untapped telework potential (+20 pp TWing share on any given weekday).
-\item Elephant in the room: Employer-side constraints because of feared productivity losses.
-\item Telework has positive externalities (in particular foregone travel) which are not part of the labor market outcome.
-\begin{itemize}
-\item[$\Rightarrow$] Suboptimal telework level (right to telework?).
-\end{itemize}
-\item Mixed effects in the literature potentially because of self-selection bias.
+\item Mixed effects in the literature potentially because of selection bias (cross-sectional data).
 \item \pkg{OPSR} to easily replicate the analysis in another context and
 \item employ the method beyond the realm of transportation.
 \end{itemize}
@@ -879,6 +748,159 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 
 
 \sectionslide{\icon{\faHashtag} Appendix}
+
+\begin{frame}
+\frametitle{Long-standing interest in the relation between telework and transport demand}
+\begin{itemize}
+\item Telework shares quadrupled during the pandemic (Barrero et al., 2023). % cite
+\item First paper: Mobility changes brought about by the pandemic.
+\begin{itemize}
+\item Adjustments to the extraordinary circumstances were not made habitual (e.g., not a change in underlying preferences, but ``applying'' these preferences in a new environment).
+\end{itemize}
+\item Telework as the lasting legacy of the pandemic reignited the interest.
+\end{itemize}
+\vspace{2em}
+\icon{\faBalanceScale} \alert{However: Evidence on the direction of the effect is mixed (Hook et al., 2020).} % cite
+\ivtsidebar{%
+Barrero JM, Bloom N, Davis SJ (2023). The Evolution of Work From Home. \textit{Journal of Economic Perspectives}, \textbf{37}(4), 23–50.
+Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energy and Climate Impacts of Teleworking. \textit{Environmental Research Letters}, \textbf{15}(9), 093003.
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Data, \greyout{tools and analysis}}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\textbf{Data}
+\begin{itemize}
+\small
+\item Three stage survey instrument (fielded after the pandemic).
+\item Understand the (evolution of the) telework landscape in Switzerland.
+\item Two stated preference experiments.
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements).
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
+\end{itemize}
+\end{itemize}
+
+\column{0.3\textwidth}
+\vspace{4em}
+\greyout{\textbf{Tools}}
+\begin{greyitemize}
+\small
+\item Suitable modeling framework.
+\item Implementation thereof in \R.
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{8em}
+\greyout{\textbf{Analysis}}
+\begin{greyitemize}
+\small
+\item Applying the tools to
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app).
+\end{greyitemize}
+
+\end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{Rich data source to investigate telework in Switzerland.}
+\ivtsidebar{%
+\url{https://www.research-collection.ethz.ch/handle/20.500.11850/737879}
+}%
+\end{frame}
+% Untapped research potential -- link!
+
+
+
+\begin{frame}
+\frametitle{\greyout{Data,} tools \greyout{and analysis}}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\greyout{\textbf{Data}}
+\begin{greyitemize}
+\small
+\item Three stage survey instrument (fielded after the pandemic).
+\item Understand the (evolution of the) telework landscape in Switzerland.
+\item Two stated preference experiments.
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements).
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
+\end{itemize}
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{4em}
+\textbf{Tools}
+\begin{itemize}
+\small
+\item Suitable modeling framework.
+\item Implementation thereof in \R.
+\end{itemize}
+
+\column{0.3\textwidth}
+\vspace{8em}
+\greyout{\textbf{Analysis}}
+\begin{greyitemize}
+\small
+\item Applying the tools to
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app).
+\end{greyitemize}
+
+\end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{\pkg{OPSR} statistical software.}
+\ivtsidebar{%
+\url{https://cran.r-project.org/package=OPSR}
+}%
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{\greyout{Data, tools and} analysis}
+\begin{columns}[T,onlytextwidth]
+\column{0.4\textwidth}
+\greyout{\textbf{Data}}
+\begin{greyitemize}
+\small
+\item Three stage survey instrument (fielded after the pandemic).
+\item Understand the (evolution of the) telework landscape in Switzerland.
+\item Two stated preference experiments.
+\begin{itemize}
+\item Leverage of employer-side incentives (hybrid work arrangements).
+\item Impact of telework on mobility tool ownership (previously neglected second-order effect).
+\end{itemize}
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{4em}
+\greyout{\textbf{Tools}}
+\begin{greyitemize}
+\small
+\item Suitable modeling framework.
+\item Implementation thereof in \R.
+\end{greyitemize}
+
+\column{0.3\textwidth}
+\vspace{8em}
+\textbf{Analysis}
+\begin{itemize}
+\small
+\item Applying the tools to
+\item TimeUse+ data (time-use and travel diary data using a smartphone tracking app; Winkler et al., 2024). % cite
+\end{itemize}
+
+\end{columns}
+\vspace{1em}
+\icon{\faFlask} \alert{Estimating telework treatment effects leveraging RP data and being mindful of selection bias.}
+\ivtsidebar{%
+Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time Use and Expenditure Data Based on GPS Tracks. \textit{Transportation}, pp. 1–27.
+}%
+\end{frame}
 
 \begin{frame}
 \frametitle{Limitations}
@@ -968,7 +990,7 @@ plot.it()
 \item Weekly km traveled is a function of $X$ ($Y(X)$).
 \item Telework is exogenous -- i.e., there are no factors simultaneously influencing telework and the error term\\$\Rightarrow$ Level effects.
 \end{itemize}
-\alert{Treatment effect is simply the level effect of the telework indicator.}
+\alert{Treatment effect is simply the level effect of the telework indicator. However, (all!) parameter estimates might be biased!}
 \column{0.5\textwidth}
 \textbf{OPSR}
 \begin{itemize}
@@ -1010,7 +1032,7 @@ tab <- TWTE::model_km$table_ute
 cat(tab)
 @
 \end{table}
-Unit treatment effects (UTE) are computed by dividing the TE (from page~\ref{tab:te}) by the difference in telework frequency.
+Unit treatment effects (UTE) are computed by dividing the TE (from Page~\ref{tab:te}) by the difference in telework frequency.
 \end{frame}
 
 \begin{frame}
