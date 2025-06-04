@@ -536,8 +536,6 @@ plot.it()
 \item Use the OPSR methodology to get unbiased treatment effects.
 \end{itemize}
 \end{columns}
-\vspace{2em}
-\icon{\faKey} \alert{Compute counterfactual expected weekly kilometers traveled (Equations~\ref{eq:opsr-cond-exp} and \ref{eq:opsr-counterfact-exp})!}
 \end{frame}
 % We should now be aware, that the descriptive group comparison is flawed!!!
 
