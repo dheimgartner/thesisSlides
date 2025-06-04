@@ -336,40 +336,6 @@ Those doing a PhD at ETH Zurich & may be losers in the first place\\
 
 
 
-\begin{frame}
-\frametitle{Wrong (group comparison)}
-% The illusion of comparing groups
-% Modeling it as an indicator
-% Selection on observables and unobservables
-\includegraphics[width=0.92\textwidth]{figures/te-illustration-1}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Still wrong (controlling for observables)}
-% The illusion of comparing groups
-% Modeling it as an indicator
-% Selection on observables and unobservables
-\includegraphics[width=0.92\textwidth]{figures/te-illustration-2}
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{Right but not observable (longitudinal estimate)}
-% The illusion of comparing groups
-% Modeling it as an indicator
-% Selection on observables and unobservables
-\includegraphics[width=\textwidth]{figures/te-illustration-3}
-\ivtsidebar{%
-Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
-}%
-\end{frame}
-
-
-
 
 \begin{frame}
 \huge
@@ -749,6 +715,32 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 \sectionslide{\icon{\faHashtag} Appendix}
 
 \begin{frame}
+\frametitle{Limitations}
+\begin{itemize}
+\item The case of Switzerland (but: \pkg{OPSR} to easily replicate the analysis, e.g., based on national census).
+\item Multivariate normal only one possible error distribution.
+\begin{itemize}
+\item Distributional assumptions should be checked (but how? $\epsilon$ is latent).
+\item Copula modeling (but no unified framework -- at least not in \R).
+\end{itemize}
+\item Backward selection (starting from an overfitted model) and identification issues.
+\item Why not leveraging the panel structure?
+\begin{itemize}
+\item Telework is used very opportunistically and flexibly (varies over the weeks).
+\item Unobserved factors that influence this (short-term) decision and VMD.
+\item[$\Rightarrow$] Greetings from Heckman!
+\end{itemize}
+\item Commute distance as explanatory variable?
+\item Arbitrary classification of teleworker groups (NTWers, NUTWers, UTWers).
+\item Incomplete understanding of employer-side (simplified modeling of telework adotion).
+\item LOL value proposition: Reinventing the wheel (\pkg{OPSR}).
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
 \frametitle{Long-standing interest in the relation between telework and transport demand}
 \begin{itemize}
 \item Telework shares quadrupled during the pandemic (Barrero et al., 2023). % cite
@@ -901,27 +893,38 @@ Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time
 }%
 \end{frame}
 
+
+
 \begin{frame}
-\frametitle{Limitations}
-\begin{itemize}
-\item The case of Switzerland (but: \pkg{OPSR} to easily replicate the analysis, e.g., based on national census).
-\item Multivariate normal only one possible error distribution.
-\begin{itemize}
-\item Distributional assumptions should be checked (but how? $\epsilon$ is latent).
-\item Copula modeling (but no unified framework -- at least not in \R).
-\end{itemize}
-\item Backward selection (starting from an overfitted model) and identification issues.
-\item Why not leveraging the panel structure?
-\begin{itemize}
-\item Telework is used very opportunistically and flexibly (varies over the weeks).
-\item Unobserved factors that influence this (short-term) decision and VMD.
-\item[$\Rightarrow$] Greetings from Heckman!
-\end{itemize}
-\item Commute distance as explanatory variable?
-\item Arbitrary classification of teleworker groups (NTWers, NUTWers, UTWers).
-\item Incomplete understanding of employer-side (simplified modeling of telework adotion).
-\item LOL value proposition: Reinventing the wheel (\pkg{OPSR}).
-\end{itemize}
+\frametitle{Wrong (group comparison)}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=0.92\textwidth]{figures/te-illustration-1}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Still wrong (controlling for observables)}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=0.92\textwidth]{figures/te-illustration-2}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Right but not observable (longitudinal estimate)}
+% The illusion of comparing groups
+% Modeling it as an indicator
+% Selection on observables and unobservables
+\includegraphics[width=\textwidth]{figures/te-illustration-3}
+\ivtsidebar{%
+Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
+}%
 \end{frame}
 
 
