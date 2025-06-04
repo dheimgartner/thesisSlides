@@ -363,7 +363,12 @@ Winkler C, Meister A, Axhausen KW (2024). The TimeUse+ Data Set: 4 Weeks of Time
 
 %% Data ------------------------------------------------------------------------
 \section{Data}
-\sectionslide{\icon{\faHashtag} Data}
+\sectionslide{%
+\icon{\faHashtag} Data\\
+\vspace{2em}
+\small
+Heimgartner D. and K. W. Axhausen (2024) Multimodality in the Swiss New Normal: Data Collection Methods and Response Behavior in a Multi-Stage Survey with Linked Stated Preference Designs, \emph{Transportation}, under review.
+}%
 
 % Telework landscape in Switzerland and changes brought about by the pandemic
 % Weekday distribution (if we model daily basis, this needs to be accounted for,
@@ -421,7 +426,12 @@ wfh_share_simulation$p
 
 %% Tools -----------------------------------------------------------------------
 \section{Tools}
-\sectionslide{\icon{\faHashtag} Tools}
+\sectionslide{%
+\icon{\faHashtag} Tools\\
+\vspace{2em}
+\small
+Heimgartner D. and X. Wang (2025) \pkg{OPSR}: A Package for Estimating Ordered Probit Switching Regression Models in \proglang{R}, \emph{Journal of Statistical Software}, submitted.
+}%
 
 % Shortcomings in the literature (modeling telework as an indicator)
 % Boxplot telework x VMD
@@ -607,7 +617,12 @@ Available on CRAN now.\textsuperscript{*}\\
 
 %% Analysis --------------------------------------------------------------------
 \section{Analysis}
-\sectionslide{\icon{\faHashtag} Analysis}
+\sectionslide{%
+\icon{\faHashtag} Analysis\\
+\vspace{2em}
+\small
+Heimgartner D. and K. W. Axhausen (2025) All Models are Wrong, Some Models are Wronger: On the Importance of Accounting for Self-Selection when Estimating Telework Treatment Effects, \emph{Transportation Research Part A: Policy and Practice}, to be transferred.
+}%
 
 \begin{frame}
 \frametitle{What if current teleworkers were not teleworking?}
