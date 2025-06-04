@@ -434,7 +434,7 @@ wfh_share_simulation$p
 \huge
 \vspace{1em}
 The notorious ``What if?'' question
-% Already implies counterfactuality
+% That keeps us all awake at nights
 \end{frame}
 
 \begin{frame}
