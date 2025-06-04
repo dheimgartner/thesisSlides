@@ -177,7 +177,6 @@ BAFU (2024). Kenngrössen zur Entwicklung der Treibhausgasemissionen in der Schw
 \item First paper: Mobility changes brought about by the pandemic.
 \begin{itemize}
 \item Adjustments to the extraordinary circumstances were not made habitual (e.g., not a change in underlying preferences, but ``applying'' these preferences in a new environment).
-\item Mode shares expected to reach pre-pandemic levels.
 \end{itemize}
 \item Telework shares quadrupled during the pandemic (Barrero et al., 2023). % cite
 \item Telework as the lasting legacy of the pandemic reignited the interest.
@@ -431,18 +430,64 @@ wfh_share_simulation$p
 % OPSR core (replication script of analysis)
 
 \begin{frame}
-\huge
+\frametitle{The notorious ``What if?'' question}
+\begin{itemize}
+\item There is a (discrete or ordinal) event of interest.
+\begin{itemize}
+\item The treatment, experiment or intervention.
+\end{itemize}
+\item Individuals are either untreated or treated.
+\item Individuals may actively choose, or passively experience the treatment (or not).
+\end{itemize}
 \vspace{1em}
-The notorious ``What if?'' question
-% That keeps us all awake at nights
+\icon{\faFlagCheckered} \alert{Treatment effect: Estimate the effect of that event on an (individually-experienced, then aggregated) outcome of interest.}
+\vspace{1em}
+\begin{table}
+\begin{tabular}{l|l}
+\textbf{Treatment} & \textbf{Outcome}\\
+Wearing a helmet while cycling & Injury severity\\
+Buying a fuel-efficient car & CO$_2$ emissions or vehicle-miles driven\\
+Doing a PhD at ETH Zurich & Being successful in life\\
+\end{tabular}
+\end{table}
+\vspace{1em}
+\icon{\faQuestion} \alert{With cross-sectional data, we only observe people as either treated or untreated (their factual state at the time of measurement) -- we never observe them in the opposite (counterfactual) state! ``What if?''}
+\ivtsidebar{%
+Mokhtarian PL (2024). The Insidious Problem of Selection Biases: How to Recognize Them, and What to Do About Them? Talk at the \textit{MIT Mobility Initiative}, \url{https://www.youtube.com/watch?v=n1cbWuShESk&t=3061s&ab_channel=MITMobilityInitiative}.
+}%
 \end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{A case of a selection bias}
+This would be fine, if the treatment were randomly assigned (RCT).\\
+$\Rightarrow \, TE = \E[Y|\text{treated}] - \E[Y|\text{untreated}]$\\
+\vspace{1em}
+\icon{\faQuestion} \alert{But what if the treated group differs from the untreated group in ways that are relevant to the outcome? $\Rightarrow$ Selection bias!}
+\vspace{1em}
+\begin{table}
+\begin{tabular}{l|l}
+\textbf{Treatment} & \textbf{Self-selection}\\
+Those choosing to wear a helmet & may be safer cyclists\\
+Those buying a fuel-efficient car & may want to travel more\\
+Those doing a PhD at ETH Zurich & may be losers in the first place\\
+\end{tabular}
+\end{table}
+\vspace{1em}
+\icon{\faFlagCheckered} \alert{Separate the treatment effect from the pre-existing differences. These pre-existing differences may be observed ($X$; ``selection on observables'') or unobserved ($\epsilon$; ``selection on unobservables'')!}
+\end{frame}
+
+
+
 
 \begin{frame}
 \frametitle{Simple group comparison masks the true treatment effect}
 % The illusion of comparing groups
 % Modeling it as an indicator
 % Selection on observables and unobservables
-\includegraphics[width=\textwidth]{figures/te-illustration}
+\includegraphics[width=\textwidth]{figures/te-illustration-2}
 \ivtsidebar{%
 Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
 }%
@@ -452,37 +497,11 @@ Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of
 
 
 \begin{frame}
-\frametitle{A case of a self-selection bias}
-\textbf{The problem}
+\frametitle{The solution: OPSR -- a form of endogenous switching regression model}
 \begin{itemize}
-\item Gold standard RCT: Randomly prescribe the treatment and compare.
-\item With observational data, treatments are often self-selected.
-\item Example: Accident severity rate (the outcome) if wearing a helmet (the treatment).
-\item[$\Rightarrow$] Selection on observables and unobservables (which leads to error correlation).
-\end{itemize}
-\vspace{1em}
-\textbf{The solution}
-\begin{itemize}
-\item Classical Heckman model (Heckman, 1979): The sample we actually observe is not random.
-% Which leads to a vialotion of the assumed error distribution (which is truncated normal!)
-% Key idea: Estimate both processes (the process of being selected into the sample) and the outcome of interest and estimate the full multivariate error distribution.
-\item Tobit-5 model: We observe the outcome of both samples (binary treatment).
-\item[$\Rightarrow$] Ordered probit switching regression: The treatment is ordinal.
-\end{itemize}
-\vspace{1em}
-\icon{\faPencil} \alert{Individuals self-select their telework status (ordinal treatment) and the outcome of interest is continuous (weekly km traveled).}
-\ivtsidebar{%
-Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econometrica}, \textbf{47}(1), 153–161.
-}%
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{The OPSR model}
-\begin{itemize}
-\item Ordered probit model + Continuous outcome model + Error correlation = OPSR
+\item Model the (ordered) treatment adoption (``selection process'') and the treatment outcome (``outcome process'') simultaneously and account for observable AND unobservable pre-existing differences.
+\item[$\Rightarrow$] $TE = \E[Y|X, \text{treated}] - \E[Y|X, \text{untreated}] \alert{+ \text{correction term}}$
+\item OPSR = Ordered probit model + Continuous outcome model + Error correlation
 \item Similar to a latent class model where class label is observed and the two processes aren't independent.
 \item[$\Rightarrow$] Probabilities of the two processes can not simply be multiplied!
 \end{itemize}
@@ -538,6 +557,10 @@ To obtain unbiased treatment effects, we must further evaluate the ``counterfact
 \E[\alert{y_{j'}} \mid Z = j] &= \alert{\Xbd} + \E[\alert{\eta_{j'}} \mid \kappa_{j-1} - \Wg < \epsilon \le \kappa_j - \Wg] \\
 &= \alert{\Xbd} - \alert{\rho_{j'}\sigma_{j'}} \frac{\phi(\kappa_j - \Wg) - \phi(\kappa_{j-1} - \Wg)}{\Phi(\kappa_j - \Wg) - \Phi(\kappa_{j-1} - \Wg)}
 \end{aligned}
+\end{equation}
+If $\rho_j \neq 0$ and/or $\rho_{j'} \neq 0$ then the treatment effect is not simply $\Xb - \Xbd$ but
+\begin{equation}
+\E[y_j \mid Z = j] - \E[y_{j'} \mid Z = j] = \Xb - \Xbd \alert{+ \text{correction term}}
 \end{equation}
 \end{frame}
 
