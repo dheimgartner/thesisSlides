@@ -78,7 +78,7 @@ Zurich, June 5th, 2025
 \begin{frame}
 \huge
 \vspace{1em}
-What is telework?
+Who does not know what telework is?
 % I hope, no committee member raised his hand (on that note: I was told to start by thanking...)
 % For the ones having raised their hand: You came badly prepared
 % But thanks for coming anyways -- your love must be unconditional, because you
@@ -143,7 +143,7 @@ Wer denkt, dass Home Office zu weniger Verkehr führt?
 % Data + Tools + Analysis (three columns)
 
 \begin{frame}
-\frametitle{Like it or not -- our everyday lifes are organized around work}
+\frametitle{Like it or not -- our everyday lives are organized around work}
 \centering
 \includegraphics[width=11.5cm]{figures/full_index_plot}
 \end{frame}
@@ -153,15 +153,15 @@ Wer denkt, dass Home Office zu weniger Verkehr führt?
 
 
 \begin{frame}
-\frametitle{Transport sector as major greenhouse gas emittor}
+\frametitle{Transport sector as major greenhouse gas emitter}
 \begin{itemize}
 \item Transport sector contributes 15\% of global greenhouse gas emissions (IPCC, 2022). % cite
-\item With emissions at 31\% being substantially higher in Switzerland (BAFU, 2024). % cite
+\item In Switzerland, emissions are substantially higher at 31\% (BAFU, 2024). % cite
 \item Reducing it through policies such as road pricing or fuel taxes is unpopular.
 \item Behavioral change too...
 \end{itemize}
 \vspace{2em}
-\icon{\faCutlery} \alert{Is telework a free lunch? However: Evidence on the direction of the effect is mixed (Hook et al., 2020).} % cite}
+\icon{\faCutlery} \alert{Is telework a free lunch? However, evidence on the direction of the effect is mixed (Hook et al., 2020).} % cite}
 \ivtsidebar{%
 IPCC (2022). Climate Change 2022: Mitigation of Climate Change. \textit{Technical report}, Contribution of Working Group III to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change.
 BAFU (2024). Kenngrössen zur Entwicklung der Treibhausgasemissionen in der Schweiz 1990–2022. \textit{Technical report}, Bundesamt für Umwelt (BAFU), Bern.
@@ -175,15 +175,15 @@ Hook A, Court V, Sovacool BK, Sorrell S (2020). A Systematic Review of the Energ
 \begin{frame}
 \frametitle{Why? Second-order effects might offset foregone commutes}
 \begin{itemize}
-\item Time flexibility might induce leasure travel.
-\item Travel-chains might become less efficient.
+\item Time flexibility might induce leisure travel.
+\item Travel chains might become less efficient.
 \item Teleworkers might be willing to accept longer commutes (de Vos et al., 2018). % cite
 \begin{itemize}
-\item I.e., they commute less frequently but if they commute, they have to travel further.
+\item i.e., they commute less frequently but if they commute, they have to travel further.
 \end{itemize}
 \end{itemize}
 \vspace{2em}
-\icon{\faLineChart} \alert{Scholarly work of the past decade leans to support evidence that telework induces more travel (Wang and Mokhtarian, 2024).} % cite
+\icon{\faLineChart} \alert{Scholarly work over the past decade suggests that telework induces more travel (Wang and Mokhtarian, 2024).} % cite
 \ivtsidebar{%
 de Vos D, Meijers E, van Ham M (2018). Working From Home and the Willingness to Accept a Longer Commute. \textit{The Annals of Regional Science}, \textbf{61}(2), 375–398.
 Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on Vehicle-Miles Driven: Applying an Ordered Probit Selection Model and Incorporating the Role of Travel Stress. \textit{Transportation Research Part A}, \textbf{186}, 104072.
@@ -197,10 +197,10 @@ Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of Teleworking on V
 \frametitle{Main research question}
 {
 \large
-Does telework lead to more or less travel, in Switzerland?\\
+Does telework lead to more or less travel in Switzerland?\\
 }
 \vspace{2em}
-\icon{\faArrowsAlt} \alert{Measuring and (therefore) modeling the impact of telework on transport demand.}
+\icon{\faArrowsAlt} \alert{Measuring and modeling the impact of telework on transport demand.}
 \end{frame}
 
 
@@ -227,16 +227,16 @@ Heimgartner D. and K. W. Axhausen (2024) Multimodality in the Swiss New Normal: 
 \begin{frame}
 \frametitle{Switzerland's telework landscape and changes brought about by the pandemic}
 \begin{itemize}
-\item Pandemic has increased the telework share by 15 pp.
+\item The pandemic has increased the telework share by 15 percentage points (pp).
 \begin{itemize}
 \item ...to around 40\% (who occasionally telework).
-\item ``over-supply'' during COVID (<50\% and very high share of fully remote TWers).
+\item Oversupply during COVID (<50\% and very high share of fully remote TWers).
 \end{itemize}
 % However, they have normalized (especially the fully remote workers).
 \item 60\% hold teleworkable jobs.
 \item 91\% of them wish to utilize telework.
 \item Gap of 20 pp exists between those who can work from home and those who actually do.
-\item About 1/4 of teleworkers desire to telework more frequently (why don't they?).
+\item About 1/4 of teleworkers desire to telework more frequently, but barriers remain.
 \end{itemize}
 \ivtsidebar{%
 Heimgartner D, Axhausen KW (2025). \pkg{snndata} -- Data for the Project Multimodality in the Swiss New Normal. \textit{Travel Survey Metadata Series 93}, IVT, ETH Zurich.
@@ -259,7 +259,7 @@ wfh_share_simulation$p
 \column{0.4\textwidth}
 \begin{itemize}
 \item Mondays and Fridays are the preferred days to telework.
-\item Potential leeway, drawing from the empirical distribution over the weekdays ($f(\text{TW freq.})$), using the stated free-choice frequency.
+\item Potential leeway identified by drawing from the empirical distribution of telework frequency across weekdays, based on stated free-choice frequency.
 \vspace{2em}
 \item[\icon{\faCompass}] \alert{Untapped telework potential between 20 and 30 pp.}
 \end{itemize}
@@ -302,7 +302,7 @@ Heimgartner D. and X. Wang (2025) \pkg{OPSR}: A Package for Estimating Ordered P
 \textbf{Treatment} & \textbf{Outcome}\\
 Wearing a helmet while cycling & Injury severity\\
 Buying a fuel-efficient car & CO$_2$ emissions or vehicle-miles driven\\
-Doing a PhD at ETH Zurich & Being successful in life\\
+Doing a PhD at ETH Zurich & Achieving career success\\
 \end{tabular}
 \end{table}
 \vspace{1em}
@@ -374,7 +374,7 @@ Figure based on: Wang X, Mokhtarian PL (2024). Examining the Treatment Effect of
 \begin{frame}
 \huge
 \vspace{1em}
-What the heck, man! What should we do?
+What the heck, man! So, what's the solution?
 \ivtsidebar{%
 Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econometrica}, \textbf{47}(1), 153–161.
 }%
@@ -390,7 +390,7 @@ Heckman J (1979). Sample Selection Bias as a Specification Error. \textit{Econom
 \item[$\Rightarrow$] $TE = \E[Y|X, \text{treated}] - \E[Y|X, \text{untreated}] \alert{+ \text{correction term}}$
 \item OPSR = Ordered probit model + Continuous outcome model + Error correlation
 \item Similar to a latent class model where class label is observed and the two processes aren't independent.
-\item[$\Rightarrow$] Probabilities of the two processes can not simply be multiplied!
+\item[$\Rightarrow$] Probabilities of the two processes cannot simply be multiplied!
 \end{itemize}
 \vspace{2em}
 \icon{\faWarning} \alert{$P_{\text{OPSR}} \neq \sum_{\text{treatment}=j}^{J} P(j) P(Y|j)$}
@@ -462,7 +462,7 @@ If $\rho_j \neq 0$ and/or $\rho_{j'} \neq 0$ then the treatment effect is not si
 \item Easily and flexibly specify the processes ($\Xb$ and $\Wg$).
 \item Estimate the parameters.
 \item Summarize the model results.
-\item Easily and itteratively update the model.
+\item Easily and iteratively update the model.
 \item Compare the models.
 \item Compute (counterfactual) conditional expectations and thus treatment effects.
 \item Summarize and visualize the treatment effects.
@@ -471,6 +471,7 @@ If $\rho_j \neq 0$ and/or $\rho_{j'} \neq 0$ then the treatment effect is not si
 \vspace{2em}
 \icon{\faBullhorn} \alert{We want it now and we want it to be fast!}
 \end{frame}
+
 
 
 
@@ -703,9 +704,9 @@ plot.it()
 \small
 \item Counterfactual weekly km traveled are very different.
 \item Telework reduces travel of a particularly mobile group (with longer commutes).
-\item Unit treatment effects indicate, that travel reduction roughly corresponds to 2-way commute distance.
-\item Travel reduction accounts to 16\% (aligns with Sallard, 2024).
-\item Descriptive analysis shows, that time-allocation is very similar across the TWer groups -- except for travel.
+\item Unit treatment effects indicate that travel reduction roughly corresponds to 2-way commute distance.
+\item Travel reduction amounts to 16\% (aligns with Sallard, 2024).
+\item Descriptive analysis shows, that time allocation is very similar across the TWer groups -- except for travel.
 \end{itemize}
 \end{columns}
 \vspace{1em}
@@ -726,20 +727,20 @@ Sallard A (2024). \textit{Mobility, Population, and Social Spaces: Understanding
 % Including limitations
 
 \begin{frame}
-\frametitle{Take aways}
+\frametitle{Takeaways}
 \begin{itemize}
-\item Telework's main effects: 1. Foregone commutes and 2. Home (instead of CBD) as trip-origin.
+\item Telework changes travel by cutting commutes and shifting trips from the central business district (CBD) to home.
 \begin{itemize}
-\item Less travel (-16\%) and less concentrated (both in time and space).
-\item Meanwhile, mobility tool ownership and mode shares are pretty stable.
+\item Result: 16\% less travel and more dispersed trip timing and locations.
+\item Mobility tool ownership and mode shares stay stable.
 \end{itemize}
-\item Switzerland has an untapped telework potential (+20 pp TWing share on any given weekday).
-\item Mixed effects in the literature potentially because of selection bias (cross-sectional data).
-\item \pkg{OPSR} to easily replicate the analysis in another context and
-\item employ the method beyond the realm of transportation.
+\item Switzerland still has 20 pp untapped telework potential on any weekday.
+\item Mixed effects reported in the literature may stem from selection bias when using cross-sectional data.
+\item The \pkg{OPSR} package makes replicating this analysis simple.
+\item It also opens doors for broader applications beyond transportation.
 \end{itemize}
 \vspace{1em}
-\icon{\faLegal} \alert{Selection bias is ubiquitous and may lead to adverse policy implications.}
+\icon{\faLegal} \alert{Selection bias is widespread and can mislead policy -- addressing it is crucial.}
 \end{frame}
 
 \sectionslide{\icon{\faHashtag} Thank you!}
